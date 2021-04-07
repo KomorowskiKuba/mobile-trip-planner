@@ -29,12 +29,48 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Card(
-              child: Text('XDD'),
+            Center(
+              child: Container(
+                height: 300, //TODO: change to dynamic
+                width: 400, //TODO: change to dynamic
+                child: Card(
+                    child: Container(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    children: [
+                      Text('Porada dnia'), //TODO: change fonts
+                      Text('LOREM IPSUM'), //TODO: change fonts
+                    ],
+                  ),
+                )),
+              ),
             ),
-            Card(
-              child: Text('XDDD'),
+            Center(
+              child: Container(
+                height: 100, //TODO: change to dynamic
+                width: 400, //TODO: change to dynamic
+                child: Card(
+                    child: Row(
+                  children: [
+                    Text('XDDD'),
+                  ],
+                )),
+              ),
             ),
+            Center(
+                child: Container(
+                    child: Card(
+              child: Column(
+                children: [
+                  Row(
+                    children: [Text('xddd')],
+                  ),
+                  Row(
+                    children: [Text('xddd')],
+                  )
+                ],
+              ),
+            ))),
           ],
         ),
       ),
