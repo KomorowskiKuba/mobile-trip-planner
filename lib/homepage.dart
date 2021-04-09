@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/plan_trip.dart';
+import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
+
+import 'widgets/next_screen_tile.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -8,6 +11,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _name = 'Kuba';
+  String _tipContent =
+      'Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!';
 
   @override
   Widget build(BuildContext context) {
@@ -23,63 +28,36 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
               child: Container(
                 height: 300, //TODO: change to dynamic
-                width: 400, //TODO: change to dynamic
+                width: double.infinity, //TODO: change to dynamic
                 child: Card(
-                    color: Theme.of(context).primaryColor,
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        children: [
-                          Text('Porada dnia',
-                              style: TextStyle(
-                                  color: Colors.white)), //TODO: change fonts
-                          Text('LOREM IPSUM',
-                              style: TextStyle(
-                                  color: Colors.white)), //TODO: change fonts
-                        ],
-                      ),
-                    )),
-              ),
-            ),
-            Center(
-              child: Container(
-                height: 100, //TODO: change to dynamic
-                width: 400, //TODO: change to dynamic
-                child: InkWell(
-                  child: Card(
-                    color: Theme.of(context).primaryColor,
-                    child: Row(
+                  color: Theme.of(context).primaryColor,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
                       children: [
-                        Text('XDDD', style: TextStyle(color: Colors.white)),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          child: Text('Porada dnia',
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 35,
+                              )),
+                        ), //TODO: change fonts
+                        Text(_tipContent,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                            )), //TODO: change fonts
                       ],
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => PlanTrip()));
-                  },
                 ),
               ),
             ),
             Center(
-                child: Container(
-                    child: Card(
-              color: Theme.of(context).primaryColor,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text('xddd', style: TextStyle(color: Colors.white))
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('xddd', style: TextStyle(color: Colors.white))
-                    ],
-                  )
-                ],
-              ),
-            ))),
+              child: NextScreenTile('XDDD_XDDD', null, PlanTrip()),
+            ),
+            Center(child: ScrollableRowTile()),
           ],
         ),
       ),
