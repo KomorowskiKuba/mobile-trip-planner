@@ -9,30 +9,37 @@ class ScrollableRowTile extends StatelessWidget {
         width: double.infinity,
         child: Card(
           color: Theme.of(context).primaryColor,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  //Icon(),
-                  Text('xddd', style: TextStyle(color: Colors.white))
-                ],
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+          child: Container(
+            padding: EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
-                    TripPreviewTile(),
+                    //Icon(),
+                    Text('Poprzednie podróże',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ))
                   ],
                 ),
-              )
-            ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      TripPreviewTile('Rzym', null),
+                      TripPreviewTile('Paryż', null),
+                      TripPreviewTile('Huston', null),
+                      TripPreviewTile('Nowy Jork', null),
+                      TripPreviewTile('Warszawa', null),
+                      TripPreviewTile('Barcelona', null),
+                      TripPreviewTile('Czeremcha', null),
+                      TripPreviewTile('Bydgoszcz', null),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ));
   }

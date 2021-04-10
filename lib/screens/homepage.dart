@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_trip_planner/plan_trip.dart';
+import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
 
-import 'widgets/next_screen_tile.dart';
+import '../widgets/next_screen_tile.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -25,6 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 5,
+            ),
             Center(
               child: Container(
                 height: 300, //TODO: change to dynamic
@@ -32,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Card(
                   color: Theme.of(context).primaryColor,
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(5),
                     child: Column(
                       children: [
                         Container(
@@ -55,7 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Center(
-              child: NextScreenTile('XDDD_XDDD', null, PlanTrip()),
+              child: NextScreenTile(
+                  'Zaplanuj podróż',
+                  Icon(
+                    Icons.airplanemode_on_sharp,
+                    size: 40,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  TripPlanScreen()),
             ),
             Center(child: ScrollableRowTile()),
           ],

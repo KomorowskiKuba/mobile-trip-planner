@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NextScreenTile extends StatelessWidget {
   final String _title;
-  final ImageIcon _icon;
+  final Icon _icon;
   final Widget _nextScreen;
 
   NextScreenTile(this._title, this._icon, this._nextScreen);
@@ -12,20 +12,36 @@ class NextScreenTile extends StatelessWidget {
     return Container(
       height: 100, //TODO: change to dynamic
       width: double.infinity, //TODO: change to dynamic
-      child: InkWell(
-        child: Card(
-          color: Theme.of(context).primaryColor,
-          child: Row(
-            children: [
-              //_icon,
-              Text(_title, style: TextStyle(color: Colors.white)),
-            ],
-          ),
+      child: Card(
+        color: Theme.of(context).primaryColor,
+        child: Row(
+          children: [
+            //_icon,
+            SizedBox(
+              width: 20,
+            ),
+            _icon, //Wywalic
+            SizedBox(
+              width: 20,
+            ),
+            Text(_title, style: TextStyle(fontSize: 25, color: Colors.white)),
+            //SizedBox(
+            //  width: 70,
+            //),
+            Spacer(),
+            IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                size: 30,
+                color: Theme.of(context).accentColor,
+              ),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => _nextScreen));
+              },
+            )
+          ],
         ),
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => _nextScreen));
-        },
       ),
     );
   }
