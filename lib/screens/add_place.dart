@@ -7,6 +7,11 @@ class AddPlaceScreen extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar('Dodaj miejsce'),
       backgroundColor: Theme.of(context).primaryColor,
+      body: Column(children: [
+        SizedBox(
+              height: 5,
+            ),
+      ],),
     );
   }
 }

@@ -11,6 +11,9 @@ class AddBaggageListScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 5,
+            ),
             CheckListItemWidget('Item 1'),
             CheckListItemWidget('Item 2'),
             CheckListItemWidget('Item 3'),

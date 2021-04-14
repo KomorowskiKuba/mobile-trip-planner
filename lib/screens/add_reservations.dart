@@ -7,6 +7,11 @@ class AddReservationsScreen extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar('Dodaj bilety i rezerwacje'),
       backgroundColor: Theme.of(context).primaryColor,
+      body: Column(children: [
+        SizedBox(
+              height: 5,
+            ),
+      ],),
     );
   }
 }

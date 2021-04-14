@@ -11,6 +11,9 @@ class AddNotesScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 5,
+            ),
             NotePreviewWidget('Note 1', 'Nothing here yet!'),
             NotePreviewWidget('Note 2', 'Nothing here yet!'),
             NotePreviewWidget('Note 3', 'Nothing here yet!'),
