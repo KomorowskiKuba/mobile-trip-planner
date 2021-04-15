@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/models/note_model.dart';
 
 class NotePreviewWidget extends StatelessWidget {
-  final String _title;
-  final String _content;
+  final Note _note;
+  final Widget _nextScreen;
 
-  NotePreviewWidget(this._title, this._content);
+  NotePreviewWidget(this._note, this._nextScreen);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class NotePreviewWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(_title,
+                Text(_note.title,
                     style: TextStyle(fontSize: 25, color: Colors.white)),
                 Spacer(),
                 IconButton(
@@ -39,7 +40,7 @@ class NotePreviewWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => null));
+                        context, MaterialPageRoute(builder: (context) => _nextScreen));
                   },
                 )
               ],
@@ -47,7 +48,7 @@ class NotePreviewWidget extends StatelessWidget {
             Container(
                 padding: EdgeInsets.all(5),
                 alignment: Alignment.topLeft,
-                child: Text(_content,
+                child: Text(_note.content,
                     style: TextStyle(color: Colors.white, fontSize: 20))),
           ],
         ),

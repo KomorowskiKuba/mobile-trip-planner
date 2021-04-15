@@ -4,7 +4,7 @@ import 'package:mobile_trip_planner/screens/add_baggage_list.dart';
 import 'package:mobile_trip_planner/screens/add_dates.dart';
 import 'package:mobile_trip_planner/screens/add_notes.dart';
 import 'package:mobile_trip_planner/screens/add_place.dart';
-import 'package:mobile_trip_planner/screens/add_reservations.dart';
+import 'package:mobile_trip_planner/screens/add_tickets.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 
@@ -44,7 +44,7 @@ class TripPlanScreen extends StatelessWidget {
                     Icons.check_box,
                     color: Theme.of(context).accentColor,
                   ), //zmienic ikonke
-                  AddReservationsScreen())),
+                  AddTicketsScreen())),
           Center(
             child: NextScreenTile(
                 'Dodaj notatki',

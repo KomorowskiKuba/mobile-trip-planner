@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/models/travel_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
 
@@ -13,6 +14,17 @@ class _MyHomePageState extends State<MyHomePage> {
   String _name = 'Kuba';
   String _tipContent =
       'Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!';
+
+  final List<Travel> _travels = [
+    Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Warszawa', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   TripPlanScreen()),
             ),
-            Center(child: ScrollableRowTile()),
+            Center(child: ScrollableRowTile(_travels)),
           ],
         ),
       ),
