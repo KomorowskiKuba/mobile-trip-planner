@@ -1,6 +1,6 @@
 class Tip {
-  final String _title;
-  final String _content;
+  final String title;
+  final String content;
 
-  Tip(this._title, this._content);
+  Tip(this.title, this.content);
 }

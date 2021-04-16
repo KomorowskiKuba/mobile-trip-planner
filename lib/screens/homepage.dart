@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/models/tip_model.dart';
 import 'package:mobile_trip_planner/models/travel_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
@@ -12,8 +13,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _name = 'Kuba';
-  String _tipContent =
-      'Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!';
+
+  final Tip _tip = Tip('Porada na dziś', 'Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!');
 
   final List<Travel> _travels = [
     Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
@@ -42,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Container(
-                height: 300, //TODO: change to dynamic
                 width: double.infinity, //TODO: change to dynamic
                 child: Card(
                   color: Theme.of(context).primaryColor,
@@ -52,13 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text('Porada dnia',
+                          child: Text(_tip.title,
                               style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontSize: 35,
                               )),
                         ), //TODO: change fonts
-                        Text(_tipContent,
+                        Text(_tip.content,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 28,

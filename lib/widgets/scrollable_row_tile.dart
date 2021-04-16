@@ -32,7 +32,7 @@ class ScrollableRowTile extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      for (var currentTravel in _travels) TripPreviewTile(currentTravel.destination, currentTravel.image),
+                      for (var currentTravel in _travels) TripPreviewTile(currentTravel),
                     ],
                   ),
                 )

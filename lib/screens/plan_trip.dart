@@ -14,56 +14,58 @@ class TripPlanScreen extends StatelessWidget {
     return Scaffold(
       appBar: MyAppBar('Planowanie podróży'),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 5,
-          ),
-          Center(
-            child: NextScreenTile(
-                'Dodaj miejsce',
-                Icon(
-                  Icons.place,
-                  color: Theme.of(context).accentColor,
-                ),
-                AddPlaceScreen()),
-          ),
-          Center(
-            child: NextScreenTile(
-                'Dodaj daty',
-                Icon(
-                  Icons.calendar_today,
-                  color: Theme.of(context).accentColor,
-                ),
-                AddDatesScreen()),
-          ),
-          Center(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Center(
               child: NextScreenTile(
-                  'Dodaj rezerwacje',
+                  'Dodaj miejsce',
+                  Icon(
+                    Icons.place,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  AddPlaceScreen()),
+            ),
+            Center(
+              child: NextScreenTile(
+                  'Dodaj daty',
+                  Icon(
+                    Icons.calendar_today,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  AddDatesScreen()),
+            ),
+            Center(
+                child: NextScreenTile(
+                    'Dodaj rezerwacje',
+                    Icon(
+                      Icons.check_box,
+                      color: Theme.of(context).accentColor,
+                    ), //zmienic ikonke
+                    AddTicketsScreen())),
+            Center(
+              child: NextScreenTile(
+                  'Dodaj notatki',
+                  Icon(
+                    Icons.notes,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  AddNotesScreen()),
+            ),
+            Center(
+              child: NextScreenTile(
+                  'Dodaj listę rzeczy',
                   Icon(
                     Icons.check_box,
                     color: Theme.of(context).accentColor,
-                  ), //zmienic ikonke
-                  AddTicketsScreen())),
-          Center(
-            child: NextScreenTile(
-                'Dodaj notatki',
-                Icon(
-                  Icons.notes,
-                  color: Theme.of(context).accentColor,
-                ),
-                AddNotesScreen()),
-          ),
-          Center(
-            child: NextScreenTile(
-                'Dodaj listę rzeczy',
-                Icon(
-                  Icons.check_box,
-                  color: Theme.of(context).accentColor,
-                ),
-                AddBaggageListScreen()),
-          ),
-        ],
+                  ),
+                  AddBaggageListScreen()),
+            ),
+          ],
+        ),
       ),
     );
   }
