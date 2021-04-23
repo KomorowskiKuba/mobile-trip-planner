@@ -5,7 +5,7 @@ class AddPlaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Dodaj miejsce'),
+      appBar: MyAppBar.withoutIcons('Dodaj miejsce'),
       backgroundColor: Theme.of(context).primaryColor,
       body: Column(children: [
         SizedBox(

@@ -15,8 +15,10 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xff0ebfeb),
         hintColor: Color(0xff81e7fd),
         backgroundColor: Color(0xff27282c),
+        errorColor: Colors.red
       ),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -15,7 +15,7 @@ class AddNotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Dodaj notatki'),
+      appBar: MyAppBar.withoutIcons('Dodaj notatki'),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: SingleChildScrollView(

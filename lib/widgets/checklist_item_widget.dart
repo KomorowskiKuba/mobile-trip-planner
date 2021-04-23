@@ -5,6 +5,8 @@ class CheckListItemWidget extends StatefulWidget {
 
   CheckListItemWidget(this._title);
 
+  String get title => _title;
+
   @override
   _CheckListItemWidgetState createState() => _CheckListItemWidgetState(_title);
 }

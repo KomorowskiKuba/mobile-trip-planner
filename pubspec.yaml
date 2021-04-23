@@ -29,3 +29,4 @@ flutter:
   assets:
     - lib/assets/images/paris.jpg
     - lib/assets/icons/ticket.png
+    - lib/assets/other/tips.json

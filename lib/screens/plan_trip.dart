@@ -12,7 +12,7 @@ class TripPlanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Planowanie podróży'),
+      appBar: MyAppBar('Planowanie podróży', Icon(Icons.save), () {}),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(

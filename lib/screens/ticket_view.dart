@@ -10,7 +10,7 @@ class TicketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(ticket.title),
+      appBar: MyAppBar.withoutIcons(ticket.title),
       backgroundColor: Theme.of(context).backgroundColor,
       body: Column(children: [
         SizedBox(height: 5),

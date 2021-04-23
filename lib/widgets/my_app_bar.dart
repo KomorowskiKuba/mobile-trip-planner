@@ -2,21 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/main.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
-  final String _title;
-  final double height = kToolbarHeight;
+  String _title;
+  final double _height = kToolbarHeight;
+  Icon _icon = Icon(null);
+  Function _function = null;
 
-  MyAppBar(this._title);
+  MyAppBar(this._title, this._icon, this._function);
+
+  MyAppBar.withoutIcons(this._title);
 
   @override
-  Size get preferredSize => Size.fromHeight(height);
+  Size get preferredSize => Size.fromHeight(_height);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        backgroundColor: Theme.of(context).accentColor,
-        title: Text(
-          _title,
-          style: TextStyle(color: Colors.white),
-        ));
+      backgroundColor: Theme.of(context).accentColor,
+      title: Text(
+        _title,
+        style: TextStyle(color: Colors.white),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 20),
+          child: GestureDetector(
+            onTap: _function,
+            child: _icon,
+          ),
+        )
+      ],
+    );
   }
 }

@@ -15,7 +15,7 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Dodaj daty'),
+      appBar: MyAppBar.withoutIcons('Dodaj daty'),
       backgroundColor: Theme.of(context).backgroundColor,
       body: Column(children: [
         SizedBox(

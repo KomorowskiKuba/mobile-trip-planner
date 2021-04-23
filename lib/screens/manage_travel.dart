@@ -11,7 +11,7 @@ class TravelManageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(_travel.destination),
+      appBar: MyAppBar.withoutIcons(_travel.destination),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(),

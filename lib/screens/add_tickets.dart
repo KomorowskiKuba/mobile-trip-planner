@@ -6,7 +6,7 @@ import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 
 class AddTicketsScreen extends StatelessWidget {
-  final List<Ticket> tickets = [
+  final List<Ticket> _tickets = [
     Ticket('Ticket 1', Image(image: AssetImage('lib/assets/images/paris.jpg'),)),
     Ticket('Ticket 2', Image(image: AssetImage('lib/assets/images/paris.jpg'),)),
     Ticket('Ticket 3', Image(image: AssetImage('lib/assets/images/paris.jpg'),)),
@@ -25,14 +25,14 @@ class AddTicketsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Dodaj bilety i rezerwacje'),
+      appBar: MyAppBar.withoutIcons('Dodaj bilety i rezerwacje'),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(children: [
           SizedBox(
                 height: 5,
           ),
-            for (var currentTicket in tickets) NextScreenTile(currentTicket.title, Icon(Icons.account_box_outlined, color: Theme.of(context).accentColor,), TicketView(currentTicket)), //TODO: Change icon to ticket icon
+            for (var currentTicket in _tickets) NextScreenTile(currentTicket.title, Icon(Icons.account_box_outlined, color: Theme.of(context).accentColor,), TicketView(currentTicket)), //TODO: Change icon to ticket icon
         ],),
       ),
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/models/tip_model.dart';
 import 'package:mobile_trip_planner/models/travel_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
+import 'package:mobile_trip_planner/screens/settings.dart';
+import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
 
 import '../widgets/next_screen_tile.dart';
@@ -14,8 +16,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _name = 'Kuba';
 
-  final Tip _tip = Tip('Porada na dziś', 'Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!');
-
+  final Tip _tip = Tip('Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!');
   final List<Travel> _travels = [
     Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
@@ -31,10 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        title: Text('Witaj, ' + _name + '!'),
-        backgroundColor: Theme.of(context).accentColor,
-      ),
+      appBar: MyAppBar('Witaj, ' + _name + '!', Icon(Icons.settings), () {
+        Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()));
+      }),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text(_tip.title,
+                          child: Text('Porada na dziś',
                               style: TextStyle(
                                 color: Theme.of(context).accentColor,
                                 fontSize: 35,

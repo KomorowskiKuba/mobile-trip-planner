@@ -19,7 +19,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(_note.title),
+      appBar: MyAppBar.withoutIcons(_note.title),
       backgroundColor: Theme.of(context).backgroundColor,
     );
   }
