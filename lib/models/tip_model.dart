@@ -5,19 +5,11 @@ import 'package:flutter/cupertino.dart';
 class Tip {
   String content;
 
-  Tip(this.content) {
-    print('XDDDDD');
-  }
+  Tip(this.content);
 
-  void loadJSON(BuildContext context) {
-    print('XDDDDD');
-    var myData;
-    FutureBuilder( 
-      future: DefaultAssetBundle.of(context).loadString('lib/assets/other/tips.json'),
-      builder: (context, snapshot) {
-        myData = json.decode(snapshot.data.toString());
-        print(myData);
-      }
-    );
+  @override
+  String toString() {
+    print(content);
+    return content.substring("Content{  ".length, content.length - 1);
   }
 }

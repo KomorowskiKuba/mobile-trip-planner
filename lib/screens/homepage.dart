@@ -1,10 +1,18 @@
+import 'dart:convert';
+import 'dart:developer' as dev;
+import 'dart:math';
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:mobile_trip_planner/models/tip_model.dart';
 import 'package:mobile_trip_planner/models/travel_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/screens/settings.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/next_screen_tile.dart';
 
@@ -14,10 +22,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future _future;
   String _name = 'Kuba';
+  List<Tip> _tips = [];
 
-  final Tip _tip = Tip('Nigdy nie zostawiaj pakowania bagazu na ostatni moment! Śpiesząc się możesz zapomnieć o czymś ważnym, co może negatywnie wpłynąć na Twój wyjazd!');
-  final List<Travel> _travels = [
+  List<Travel> _travels = [
     Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
@@ -27,6 +36,27 @@ class _MyHomePageState extends State<MyHomePage> {
     Travel('Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
   ];
+
+  _loadName() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      _name = preferences.getString('userName');
+    });
+  }
+
+  int _getRandomIndex(int length) {
+    var rng = new Random();
+    return rng.nextInt(length);
+  }
+
+  Future<String> _readJson() async => rootBundle.loadString('lib/assets/other/tips.json');
+
+  @override
+  void initState() {
+    _future = _readJson();
+    _loadName();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +83,35 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text('Porada na dziś',
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontSize: 35,
-                              )),
-                        ), //TODO: change fonts
-                        Text(_tip.content,
+                          child: Text(
+                            'Porada na dziś',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                            )), //TODO: change fonts
+                              color: Theme.of(context).accentColor,
+                              fontSize: 35,
+                            )
+                          ),
+                        ), //TODO: change fonts//TODO: change fonts
+                        FutureBuilder(
+                          future: _future,
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('Ładowanie...');
+                            }
+
+                            List<dynamic> parsedJson = jsonDecode(snapshot.data);
+                            _tips = parsedJson.map((element) {
+                              return Tip(element.toString());
+                            }).toList();
+
+                            return Text(
+                              _tips.length == 0 ? "Ładowanie..." : _tips[_getRandomIndex(_tips.length)].toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                              )
+                            );
+                          }
+                        )
                       ],
                     ),
                   ),
