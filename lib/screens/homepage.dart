@@ -23,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future _future;
-  String _name = 'Kuba';
+  String _name = 'Nieznajomy';
   List<Tip> _tips = [];
 
   List<Travel> _travels = [
@@ -40,7 +40,11 @@ class _MyHomePageState extends State<MyHomePage> {
   _loadName() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      _name = preferences.getString('userName');
+      if (preferences.getString('userName').length > 0) {
+        _name = preferences.getString('userName');
+      } else {
+        _name = 'Nieznajomy';
+      }
     });
   }
 
@@ -64,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: MyAppBar('Witaj, ' + _name + '!', Icon(Icons.settings), () {
         Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()));
+                    MaterialPageRoute(builder: (context) => SettingsScreen())).then((value) => _loadName());
       }),
       body: SingleChildScrollView(
         child: Column(

@@ -9,7 +9,6 @@ class Tip {
 
   @override
   String toString() {
-    print(content);
     return content.substring("Content{  ".length, content.length - 1);
   }
 }
