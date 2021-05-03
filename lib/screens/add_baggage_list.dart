@@ -8,7 +8,7 @@ class AddBaggageListScreen extends StatefulWidget {
 }
 
 class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
-  String _text;
+  String _text = "";
   final _myController = TextEditingController();
   List<String> _items = [
     'Item 1',
@@ -28,79 +28,76 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar('Dodaj listę rzeczy', Icon(Icons.add), () {
-        setState(() {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              return WillPopScope (
-                child: Container(
-                  height: 200, //TODO: zmienic na dynamic
-                  color: Theme.of(context).backgroundColor,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          width: double.infinity,
-                          child: Container(
-                            color: Theme.of(context).primaryColor,
-                            child: TextField(
-                              controller: _myController,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: _text,
-                              ),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22
+        appBar: MyAppBar('Dodaj listę rzeczy', Icon(Icons.add), () {
+          setState(() {
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return WillPopScope(
+                    child: Container(
+                      height: 200, //TODO: zmienic na dynamic
+                      color: Theme.of(context).backgroundColor,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              width: double.infinity,
+                              child: Container(
+                                color: Theme.of(context).primaryColor,
+                                child: TextField(
+                                  controller: _myController,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: _text,
+                                  ),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22),
+                                ),
                               ),
                             ),
-                          ),
+                            Container(
+                                alignment: Alignment.bottomRight,
+                                padding: EdgeInsets.only(right: 5),
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Theme.of(context).accentColor)),
+                                    onPressed: () {
+                                      _text = _myController.text;
+                                      _saveItem(_text);
+                                      _myController.clear();
+                                      Navigator.pop(context, _text);
+                                    },
+                                    child: Text(
+                                      'Zapisz',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    )))
+                          ],
                         ),
-                        Container(
-                          alignment: Alignment.bottomRight,
-                          padding: EdgeInsets.only(right: 5),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).accentColor)
-                            ),
-                            onPressed: () {
-                              _text = _myController.text;
-                              _saveItem(_text);
-                              _myController.clear();
-                              Navigator.pop(context, _text);
-                            },
-                            child: Text(
-                              'Zapisz',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white
-                              ),
-                            )
-                          )
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                onWillPop: () {
-                  _myController.clear();
-                  Navigator.pop(context, _text);
-                },
-              );
-            }
-          );
-        });
-      }),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        children: [
-          SizedBox(height: 5,),
-          Expanded(
-            child: ListView.builder(
+                    onWillPop: () {
+                      _myController.clear();
+                      Navigator.pop(context, _text);
+                      throw Exception(); //wtf
+                    },
+                  );
+                });
+          });
+        }),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: Column(
+          children: [
+            SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              child: ListView.builder(
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   final item = _items[index];
@@ -112,16 +109,20 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerLeft,
                         color: Theme.of(context).errorColor,
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete, color: Colors.white,),
-                            SizedBox(width: 10),
-                            Text(
-                              'Usuń element',
-                              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ]
-                        ),
+                        child: Row(children: [
+                          Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Usuń element',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ]),
                       ),
                     ),
                     key: Key(item),
@@ -134,9 +135,8 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                   );
                 },
               ),
-          ),
-        ],
-      )
-    );
+            ),
+          ],
+        ));
   }
 }

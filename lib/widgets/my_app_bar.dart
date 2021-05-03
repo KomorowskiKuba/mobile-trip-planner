@@ -5,7 +5,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   String _title;
   final double _height = kToolbarHeight;
   Icon _icon = Icon(null);
-  Function _function = null;
+  Function _function = () {};
 
   MyAppBar(this._title, this._icon, this._function);
 
@@ -26,7 +26,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(right: 20),
           child: GestureDetector(
-            onTap: _function,
+            onTap: () => _function,
             child: _icon,
           ),
         )

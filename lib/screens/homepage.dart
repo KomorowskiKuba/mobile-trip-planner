@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:math';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future _future;
+  Future _future = Future<Null>.value(null);
   String _name = 'Nieznajomy';
   List<Tip> _tips = [];
 
@@ -30,17 +29,22 @@ class _MyHomePageState extends State<MyHomePage> {
     Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel(
+        'Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
     Travel('Warszawa', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel(
+        'Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel(
+        'Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel(
+        'Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
   ];
 
   _loadName() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
-      if (preferences.getString('userName').length > 0) {
+      if (preferences.getString('userName') != null &&
+          preferences.getString('userName').length > 0) {
         _name = preferences.getString('userName');
       } else {
         _name = 'Nieznajomy';
@@ -53,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return rng.nextInt(length);
   }
 
-  Future<String> _readJson() async => rootBundle.loadString('lib/assets/other/tips.json');
+  Future<String> _readJson() async =>
+      rootBundle.loadString('lib/assets/other/tips.json');
 
   @override
   void initState() {
@@ -68,7 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: MyAppBar('Witaj, ' + _name + '!', Icon(Icons.settings), () {
         Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen())).then((value) => _loadName());
+                MaterialPageRoute(builder: (context) => SettingsScreen()))
+            .then((value) => _loadName());
       }),
       body: SingleChildScrollView(
         child: Column(
@@ -87,35 +93,35 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            'Porada na dziś',
-                            style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                              fontSize: 35,
-                            )
-                          ),
-                        ), //TODO: change fonts//TODO: change fonts
-                        FutureBuilder(
-                          future: _future,
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (!snapshot.hasData) {
-                              return Text('Ładowanie...');
-                            }
-
-                            List<dynamic> parsedJson = jsonDecode(snapshot.data);
-                            _tips = parsedJson.map((element) {
-                              return Tip(element.toString());
-                            }).toList();
-
-                            return Text(
-                              _tips.length == 0 ? "Ładowanie..." : _tips[_getRandomIndex(_tips.length)].toString(),
+                          child: Text('Porada na dziś',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                              )
-                            );
-                          }
-                        )
+                                color: Theme.of(context).accentColor,
+                                fontSize: 35,
+                              )),
+                        ), //TODO: change fonts
+                        FutureBuilder(
+                            future: _future,
+                            builder: (context, AsyncSnapshot snapshot) {
+                              if (!snapshot.hasData) {
+                                return Text('Ładowanie...');
+                              }
+
+                              List<dynamic> parsedJson =
+                                  jsonDecode(snapshot.data);
+                              _tips = parsedJson.map((element) {
+                                return Tip(element.toString());
+                              }).toList();
+
+                              return Text(
+                                  _tips.length == 0
+                                      ? "Ładowanie..."
+                                      : _tips[_getRandomIndex(_tips.length)]
+                                          .toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 28,
+                                  ));
+                            })
                       ],
                     ),
                   ),

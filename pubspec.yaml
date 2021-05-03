@@ -17,6 +17,10 @@ dependencies:
   
   date_range_picker: ^1.0.3
 
+  intl: ^0.17.0
+
+  google_maps_flutter : ^2.0.0
+
   cupertino_icons: ^1.0.0
 
 

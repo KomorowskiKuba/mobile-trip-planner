@@ -10,20 +10,32 @@ class AddDatesScreen extends StatefulWidget {
 }
 
 class _AddDatesScreenState extends State<AddDatesScreen> {
+  final key = new GlobalKey<DatePickAndDisplayTileState>();
   List<DateTime> dates = [DateTime.now(), DateTime.now()];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar.withoutIcons('Dodaj daty'),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(children: [
-        SizedBox(
+    return WillPopScope(
+      child: Scaffold(
+        appBar: MyAppBar.withoutIcons('Dodaj daty'),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: Column(
+          children: [
+            SizedBox(
               height: 5,
             ),
-        DatePickAndDisplayTile(),
-        NextScreenTile('xd', Icon(Icons.ac_unit), null)
-      ],),
+            DatePickAndDisplayTile(key: key),
+            //NextScreenTile('xd', Icon(Icons.ac_unit), Widget(Null))
+          ],
+        ),
+      ),
+      onWillPop: () {
+        setState(() {
+          dates = key.currentState.dates;
+          print(dates);
+          Navigator.pop(context);
+        });
+      },
     );
   }
 }
