@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_places_picker/google_places_picker.dart';
 
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 
@@ -24,13 +25,10 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     return Scaffold(
         appBar: MyAppBar.withoutIcons('Dodaj miejsce'),
         backgroundColor: Theme.of(context).primaryColor,
-        body: Container(
-          height: 500,
-          width: double.infinity,
-          child: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
-          ),
+        body: GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: CameraPosition(target: _center, zoom: 11),
+          onMapCreated: _onMapCreated,
         ));
   }
 }

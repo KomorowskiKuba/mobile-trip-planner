@@ -19,7 +19,9 @@ dependencies:
 
   intl: ^0.17.0
 
-  google_maps_flutter : ^2.0.0
+  google_maps_flutter : ^2.0.1
+
+  #google_places_picker: ^3.0.2
 
   cupertino_icons: ^1.0.0
 
