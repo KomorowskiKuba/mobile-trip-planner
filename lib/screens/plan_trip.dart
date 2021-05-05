@@ -20,7 +20,6 @@ class TripPlanScreen extends StatelessWidget {
           print('Zapisano!');
           _isSaved = true;
           print(_isSaved);
-          
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: SingleChildScrollView(
@@ -62,7 +61,7 @@ class TripPlanScreen extends StatelessWidget {
                       Icons.notes,
                       color: Theme.of(context).accentColor,
                     ),
-                    AddNotesScreen()),
+                    NotesScreen()),
               ),
               Center(
                 child: NextScreenTile(
@@ -82,32 +81,31 @@ class TripPlanScreen extends StatelessWidget {
           Navigator.pop(context, false);
         } else {
           showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Zapisz podróż'),
-                content: Text('Czy przed wyjściem chcesz zapisać podróż?'),
-                actions: [
-                  TextButton(
-                    child: Text('Nie'),
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                      Navigator.pop(context, false);
-                    },
-                  ),
-                  TextButton(
-                    child: Text('Tak'),
-                    onPressed: () {
-                      //save
-                      print('SAVED');
-                      Navigator.pop(context, false);
-                      Navigator.pop(context, false);
-                    },
-                  ), 
-                ],
-              );
-            }
-          );
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Zapisz podróż'),
+                  content: Text('Czy przed wyjściem chcesz zapisać podróż?'),
+                  actions: [
+                    TextButton(
+                      child: Text('Nie'),
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                        Navigator.pop(context, false);
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Tak'),
+                      onPressed: () {
+                        //save
+                        print('SAVED');
+                        Navigator.pop(context, false);
+                        Navigator.pop(context, false);
+                      },
+                    ),
+                  ],
+                );
+              });
         }
         return Future.value(false);
       },

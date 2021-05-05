@@ -28,7 +28,6 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def gmpWriteKey = properties.getProperty('GMP_KEY')
-println "${gmpWriteKey}"
 
 android {
     compileSdkVersion 29

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'package:mobile_trip_planner/models/ticket_model.dart';
 import 'package:mobile_trip_planner/screens/ticket_view.dart';
+import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 
-class AddTicketsScreen extends StatelessWidget {
+class AddTicketsScreen extends StatefulWidget {
+  @override
+  _AddTicketsScreenState createState() => _AddTicketsScreenState();
+}
+
+class _AddTicketsScreenState extends State<AddTicketsScreen> {
   final List<Ticket> _tickets = [
     Ticket(
         'Ticket 1',
@@ -31,66 +36,45 @@ class AddTicketsScreen extends StatelessWidget {
         'Ticket 5',
         Image(
           image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 6',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 7',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 8',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 9',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 10',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 11',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 12',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
         ))
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons('Dodaj bilety i rezerwacje'),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
+        appBar: MyAppBar.withoutIcons('Dodaj bilety i rezerwacje'),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: Column(
           children: [
             SizedBox(
               height: 5,
             ),
-            for (var currentTicket in _tickets)
-              NextScreenTile(
-                  currentTicket.title,
-                  Icon(
-                    Icons.account_box_outlined,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  TicketView(currentTicket)), //TODO: Change icon to ticket icon
+            Expanded(
+              child: ListView.builder(
+                itemCount: _tickets.length,
+                itemBuilder: (context, index) {
+                  final ticket = _tickets[index];
+
+                  return Dismissible(
+                      direction: DismissDirection.startToEnd,
+                      background: DismissibleItemBackground(),
+                      key: Key(ticket.title),
+                      onDismissed: (direction) {
+                        setState(() {
+                          _tickets.removeAt(index);
+                        });
+                      },
+                      child: NextScreenTile(
+                          ticket.title,
+                          Icon(
+                            Icons.account_box_outlined,
+                            color: Theme.of(context).accentColor,
+                          ),
+                          TicketView(ticket)));
+                },
+              ),
+            ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

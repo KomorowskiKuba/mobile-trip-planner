@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget.dart';
+import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 
 class AddBaggageListScreen extends StatefulWidget {
@@ -104,27 +105,7 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
 
                   return Dismissible(
                     direction: DismissDirection.startToEnd,
-                    background: Card(
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        alignment: Alignment.centerLeft,
-                        color: Theme.of(context).errorColor,
-                        child: Row(children: [
-                          Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            'Usuń element',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]),
-                      ),
-                    ),
+                    background: DismissibleItemBackground(),
                     key: Key(item),
                     onDismissed: (direction) {
                       setState(() {

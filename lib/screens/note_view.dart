@@ -19,8 +19,30 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons(_note.title),
-      backgroundColor: Theme.of(context).backgroundColor,
-    );
+        appBar: MyAppBar.withoutIcons(_note.title),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              Card(
+                color: Theme.of(context).primaryColor,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    _note.content,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
