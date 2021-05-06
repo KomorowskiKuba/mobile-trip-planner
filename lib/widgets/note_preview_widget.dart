@@ -56,6 +56,7 @@ class NotePreviewWidget extends StatelessWidget {
                 padding: EdgeInsets.all(5),
                 alignment: Alignment.topLeft,
                 child: Text(_note.content,
+                    maxLines: 5,
                     style: TextStyle(color: Colors.white, fontSize: 20))),
           ],
         ),

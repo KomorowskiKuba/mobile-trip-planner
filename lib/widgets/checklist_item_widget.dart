@@ -14,8 +14,16 @@ class CheckListItemWidget extends StatefulWidget {
 class _CheckListItemWidgetState extends State<CheckListItemWidget> {
   final String _title;
   bool _checkBoxValue = false;
+  var _noteController;
 
   _CheckListItemWidgetState(this._title);
+
+  void initState() {
+    super.initState();
+    if (_title != null) {
+      _noteController = TextEditingController(text: _title);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +40,18 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
                   setState(() => _checkBoxValue = value);
                 }),
             SizedBox(
-              width: 20,
+              width: 10,
             ),
-            Text(_title, style: TextStyle(fontSize: 25, color: Colors.white)),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 50,
+              child: TextField(
+                  controller: _noteController,
+                  textCapitalization: TextCapitalization.sentences,
+                  style: TextStyle(fontSize: 25, color: Colors.white),
+                  decoration: InputDecoration(
+                      hintText: 'Przedmiot', border: InputBorder.none)),
+            ),
             //SizedBox(
             //  width: 70,
           ],
