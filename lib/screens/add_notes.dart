@@ -24,7 +24,12 @@ class _NotesScreenState extends State<NotesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar.withoutIcons('Dodaj notatki'),
+        appBar: MyAppBar('Dodaj notatki', Icon(Icons.add), () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NoteViewScreen(Note(null, null))));
+        }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(
           children: [

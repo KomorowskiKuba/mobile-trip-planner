@@ -32,62 +32,66 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
         appBar: MyAppBar('Dodaj listę rzeczy', Icon(Icons.add), () {
           setState(() {
             showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return WillPopScope(
-                    child: Container(
-                      height: 200, //TODO: zmienic na dynamic
-                      color: Theme.of(context).backgroundColor,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              width: double.infinity,
-                              child: Container(
-                                color: Theme.of(context).primaryColor,
-                                child: TextField(
-                                  controller: _myController,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: _text,
+                  return Wrap(children: [
+                    WillPopScope(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        color: Theme.of(context).backgroundColor,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                width: double.infinity,
+                                child: Container(
+                                  color: Theme.of(context).primaryColor,
+                                  child: TextField(
+                                    controller: _myController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: _text,
+                                    ),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 22),
                                   ),
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22),
                                 ),
                               ),
-                            ),
-                            Container(
-                                alignment: Alignment.bottomRight,
-                                padding: EdgeInsets.only(right: 5),
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                Theme.of(context).accentColor)),
-                                    onPressed: () {
-                                      _text = _myController.text;
-                                      _saveItem(_text);
-                                      _myController.clear();
-                                      Navigator.pop(context, _text);
-                                    },
-                                    child: Text(
-                                      'Zapisz',
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white),
-                                    )))
-                          ],
+                              Container(
+                                  alignment: Alignment.bottomRight,
+                                  padding: EdgeInsets.only(right: 5),
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Theme.of(context)
+                                                      .accentColor)),
+                                      onPressed: () {
+                                        _text = _myController.text;
+                                        _saveItem(_text);
+                                        _myController.clear();
+                                        Navigator.pop(context, _text);
+                                      },
+                                      child: Text(
+                                        'Zapisz',
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      )))
+                            ],
+                          ),
                         ),
                       ),
+                      onWillPop: () {
+                        _myController.clear();
+                        Navigator.pop(context, _text);
+                        throw Exception(); //wtf
+                      },
                     ),
-                    onWillPop: () {
-                      _myController.clear();
-                      Navigator.pop(context, _text);
-                      throw Exception(); //wtf
-                    },
-                  );
+                  ]);
                 });
           });
         }),

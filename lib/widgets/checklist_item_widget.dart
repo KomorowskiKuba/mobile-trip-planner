@@ -8,7 +8,8 @@ class CheckListItemWidget extends StatefulWidget {
   String get title => _title;
 
   @override
-  _CheckListItemWidgetState createState() => _CheckListItemWidgetState(_title);
+  _CheckListItemWidgetState createState() => _CheckListItemWidgetState(
+      _title); //TODO: CHANGE to proper version, without constructor
 }
 
 class _CheckListItemWidgetState extends State<CheckListItemWidget> {
@@ -46,6 +47,9 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
               width: MediaQuery.of(context).size.width * 0.8,
               height: 50,
               child: TextField(
+                  onSubmitted: (val) {
+                    FocusScope.of(context).unfocus();
+                  },
                   controller: _noteController,
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(fontSize: 25, color: Colors.white),

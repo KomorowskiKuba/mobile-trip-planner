@@ -18,18 +18,24 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
       color: Theme.of(context).primaryColor,
       child: Container(
         padding: EdgeInsets.all(5),
-        height: 125,
+        //height: 125,
         width: double.infinity,
         child: Column(
           children: [
             Row(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(width: 10),
+                Icon(
+                  Icons.calendar_today_outlined,
+                  color: Theme.of(context).accentColor,
+                ),
+                SizedBox(width: 10),
                 Text(
                   'Data wyjazdu:',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 10),
@@ -37,7 +43,7 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
                   DateFormat('dd-MM-yyyy').format(_dates[0]),
                   style: TextStyle(
                       color: Colors.white, //TODO: change to constrained display
-                      fontSize: 20),
+                      fontSize: 28),
                 )
               ],
             ),
@@ -47,17 +53,23 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
             Row(
               //mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(width: 10),
+                Icon(
+                  Icons.calendar_today_rounded,
+                  color: Theme.of(context).accentColor,
+                ),
+                SizedBox(width: 10),
                 Text(
                   'Data powrotu:',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 30,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(width: 10),
                 Text(
                   DateFormat('dd-MM-yyyy').format(_dates[1]),
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(color: Colors.white, fontSize: 28),
                 )
               ],
             ),

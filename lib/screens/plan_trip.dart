@@ -7,6 +7,7 @@ import 'package:mobile_trip_planner/screens/add_place.dart';
 import 'package:mobile_trip_planner/screens/add_tickets.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
+import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class TripPlanScreen extends StatelessWidget {
   bool _isSaved = false;
@@ -83,28 +84,9 @@ class TripPlanScreen extends StatelessWidget {
           showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Zapisz podróż'),
-                  content: Text('Czy przed wyjściem chcesz zapisać podróż?'),
-                  actions: [
-                    TextButton(
-                      child: Text('Nie'),
-                      onPressed: () {
-                        Navigator.pop(context, false);
-                        Navigator.pop(context, false);
-                      },
-                    ),
-                    TextButton(
-                      child: Text('Tak'),
-                      onPressed: () {
-                        //save
-                        print('SAVED');
-                        Navigator.pop(context, false);
-                        Navigator.pop(context, false);
-                      },
-                    ),
-                  ],
-                );
+                return YesNoSavingPopupWidget(
+                    title: 'Zapisz podróż',
+                    content: 'Czy przed wyjściem chcesz zapisać podróż?');
               });
         }
         return Future.value(false);
