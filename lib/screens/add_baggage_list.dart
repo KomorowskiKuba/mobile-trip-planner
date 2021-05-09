@@ -38,7 +38,7 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                   return Wrap(children: [
                     WillPopScope(
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).size.height * 0.2,
                         color: Theme.of(context).backgroundColor,
                         child: Center(
                           child: Column(

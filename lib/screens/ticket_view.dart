@@ -10,21 +10,23 @@ class TicketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons(ticket.title),
+      appBar: MyAppBar(ticket.title, Icon(Icons.save), () {}),
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(children: [
-        SizedBox(height: 5),
-        Container(
-          width: double.infinity,
-          height: 300,
-          child: Card(
-            color: Theme.of(context).primaryColor,
-            child: Container(child: 
-              ticket.image,
+      body: Column(
+        children: [
+          SizedBox(height: 5),
+          Container(
+            width: double.infinity,
+            height: 300,
+            child: Card(
+              color: Theme.of(context).primaryColor,
+              child: Container(
+                child: ticket.image,
+              ),
             ),
-          ),
-        )
-      ],),
+          )
+        ],
+      ),
     );
   }
 }

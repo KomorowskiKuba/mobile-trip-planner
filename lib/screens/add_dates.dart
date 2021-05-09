@@ -12,6 +12,7 @@ class AddDatesScreen extends StatefulWidget {
 class _AddDatesScreenState extends State<AddDatesScreen> {
   final key = new GlobalKey<DatePickAndDisplayTileState>();
   List<DateTime> dates = [DateTime.now(), DateTime.now()];
+  int amountOfDays = 7;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
               height: 5,
             ),
             DatePickAndDisplayTile(key: key),
+
             //NextScreenTile('xd', Icon(Icons.ac_unit), Widget(Null))
           ],
         ),
@@ -32,6 +34,7 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
       onWillPop: () {
         setState(() {
           dates = key.currentState.dates;
+          amountOfDays = dates[1].day - dates[0].day;
           print(dates);
           Navigator.pop(context);
         });
