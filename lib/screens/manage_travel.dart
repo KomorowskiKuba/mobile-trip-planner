@@ -4,6 +4,7 @@ import 'package:mobile_trip_planner/models/travel_model.dart';
 import 'package:mobile_trip_planner/widgets/date_pick_and_display_tile.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
+import 'package:mobile_trip_planner/widgets/travel_destination_widget.dart';
 
 import 'add_baggage_list.dart';
 import 'add_notes.dart';
@@ -18,11 +19,12 @@ class TravelManageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons(_travel.destination),
+      appBar: MyAppBar.withoutIcons('Twoja podróż'),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            TravelDestinationTile(travelDestination: _travel.destination),
             DatePickAndDisplayTile(),
             Center(
                 child: NextScreenTile(

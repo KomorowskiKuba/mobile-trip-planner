@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
+import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setString('userName', name);
+      SavedSnackBar.buildSavedSnackBar(context);
     });
   }
 

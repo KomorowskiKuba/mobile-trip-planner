@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 
 class YesNoSavingPopupWidget extends StatefulWidget {
   final String title;
@@ -29,6 +30,7 @@ class _YesNoSavingPopupWidgetState extends State<YesNoSavingPopupWidget> {
           child: Text('Tak'),
           onPressed: () {
             //save
+            SavedSnackBar.buildSavedSnackBar(context);
             print('SAVED');
             Navigator.pop(context, false);
             Navigator.pop(context, false);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/models/note_model.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
+import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
-class NoteViewScreen extends StatefulWidget {
+class NoteViewScreen extends StatefulWidget { //TODO: CHANGE to key driven
   final Note _note;
 
   NoteViewScreen(this._note);
@@ -34,7 +35,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
           appBar: MyAppBar('Notatka', Icon(Icons.save), () {
             if (!_isSaved) {
               _isSaved = true;
-              print("Zapisano!");
+              //save
+              SavedSnackBar.buildSavedSnackBar(context);
             }
           }),
           backgroundColor: Theme.of(context).backgroundColor,
