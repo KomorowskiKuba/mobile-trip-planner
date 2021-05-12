@@ -1,16 +1,3 @@
 # mobile_trip_planner
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Mobile Trip Planner is a mobile app written in Dart language with a Flutter framework. This app is my personal project for my studies. It allows user to completely plan a trip ex. : pick a destination, choose dates, add notes from the journey, store tickets and reservations etc. This app is still in development.
