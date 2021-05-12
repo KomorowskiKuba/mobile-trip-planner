@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_trip_planner/models/ticket_model.dart';
+import 'package:mobile_trip_planner/screens/full_ticket_screen.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
@@ -11,7 +12,7 @@ class TicketView extends StatefulWidget {
   Ticket ticket;
 
   TicketView({Key key, this.ticket}) : super(key: key);
-  
+
   @override
   _TicketViewState createState() => _TicketViewState();
 }
@@ -20,7 +21,7 @@ class _TicketViewState extends State<TicketView> {
   bool _isSaved = true;
   final picker = ImagePicker();
   File _imageFile;
-  
+
   _getFromGallery() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -33,16 +34,15 @@ class _TicketViewState extends State<TicketView> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
         appBar: MyAppBar(widget.ticket.title, Icon(Icons.save), () {
           if (!_isSaved) {
-                _isSaved = true;
-                //save
-                SavedSnackBar.buildSavedSnackBar(context);
+            _isSaved = true;
+            //save
+            SavedSnackBar.buildSavedSnackBar(context);
           }
         }),
         backgroundColor: Theme.of(context).backgroundColor,
@@ -55,23 +55,28 @@ class _TicketViewState extends State<TicketView> {
               child: InkWell(
                 child: Card(
                   color: Theme.of(context).primaryColor,
-                  child: _imageFile == null ? 
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Przytrzymaj żeby dodać zdjęcie',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold
-                      )
-                    )
-                  ) 
-                  : Container(
-                    child: Image.file(_imageFile),
-                  ),
+                  child: _imageFile == null
+                      ? Container(
+                          alignment: Alignment.center,
+                          child: Text('Przytrzymaj żeby dodać zdjęcie',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold)))
+                      : Container(
+                          child: Image.file(_imageFile),
+                        ),
                 ),
                 onLongPress: _getFromGallery,
+                onTap: () {
+                  if (_imageFile != null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                FullTicketScreen(_imageFile)));
+                  }
+                },
               ),
             )
           ],
