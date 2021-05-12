@@ -19,25 +19,18 @@ class TicketView extends StatefulWidget {
 class _TicketViewState extends State<TicketView> {
   bool _isSaved = true;
   final picker = ImagePicker();
-  Image _image;
-
-  @override
-  void initState() {
-    super.initState();
-    _image = widget.ticket.image;
-  }
+  File _imageFile;
   
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  _getFromGallery() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+    );
 
-    setState(() {
-      if (pickedFile != null) {
-        _image = Image.file(File(pickedFile.path));
-        _isSaved = false;
-      } else {
-        print('No image selected!');
-      }
-    });
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
   }
 
 
@@ -62,11 +55,23 @@ class _TicketViewState extends State<TicketView> {
               child: InkWell(
                 child: Card(
                   color: Theme.of(context).primaryColor,
-                  child: Container(
-                    child: widget.ticket.image,
+                  child: _imageFile == null ? 
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Przytrzymaj żeby dodać zdjęcie',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold
+                      )
+                    )
+                  ) 
+                  : Container(
+                    child: Image.file(_imageFile),
                   ),
                 ),
-                onLongPress: getImage,
+                onLongPress: _getFromGallery,
               ),
             )
           ],
