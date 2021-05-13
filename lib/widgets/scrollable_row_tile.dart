@@ -10,7 +10,6 @@ class ScrollableRowTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 200,
         width: double.infinity,
         child: Card(
           color: Theme.of(context).primaryColor,

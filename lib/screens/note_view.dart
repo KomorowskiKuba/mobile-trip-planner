@@ -4,28 +4,25 @@ import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
-class NoteViewScreen extends StatefulWidget { //TODO: CHANGE to key driven
-  final Note _note;
+class NoteViewScreen extends StatefulWidget {
+  final Note note;
 
-  NoteViewScreen(this._note);
+  NoteViewScreen({key, this.note}) : super(key: key);
 
   @override
-  _NoteViewScreenState createState() => _NoteViewScreenState(_note);
+  _NoteViewScreenState createState() => _NoteViewScreenState();
 }
 
 class _NoteViewScreenState extends State<NoteViewScreen> {
   bool _isSaved = false;
-  final Note _note;
   var _titleController;
   var _contentController;
-
-  _NoteViewScreenState(this._note);
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController(text: _note.title);
-    _contentController = TextEditingController(text: _note.content);
+    _titleController = TextEditingController(text: widget.note.title);
+    _contentController = TextEditingController(text: widget.note.content);
   }
 
   @override

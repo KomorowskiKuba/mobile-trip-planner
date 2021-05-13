@@ -10,22 +10,27 @@ class TripPreviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 150,
-      width: 200,
+      //height: height * 0.2,
+      width: width * 0.5,
       child: GestureDetector(
         child: Card(
           color: Theme.of(context).primaryColorLight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(_travel.destination, style: TextStyle(fontSize: 25, color: Colors.white)),
-              SizedBox(
-                height: 5,
+              Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Text(_travel.destination, style: TextStyle(fontSize: 25, color: Colors.white)),
               ),
               Container(
-                width: 100,
-                height: 100,
+                padding: EdgeInsets.all(5),
+                //width: width * 0.5,
+                //height: height * 0.16,
                 child: Image(
                   image: AssetImage('lib/assets/images/paris.jpg'),
                 ),

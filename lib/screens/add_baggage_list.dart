@@ -73,7 +73,7 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                         _items.removeAt(index);
                       });
                     },
-                    child: CheckListItemWidget(item),
+                    child: CheckListItemWidget(title: item),
                   );
                 },
               ),

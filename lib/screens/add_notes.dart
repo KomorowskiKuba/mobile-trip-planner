@@ -28,7 +28,7 @@ class _NotesScreenState extends State<NotesScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(Note(null, null))));
+                  builder: (context) => NoteViewScreen(note: Note(null, null))));
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(
@@ -51,7 +51,7 @@ class _NotesScreenState extends State<NotesScreen> {
                         _notes.removeAt(index);
                       });
                     },
-                    child: NotePreviewWidget(note, NoteViewScreen(note)),
+                    child: NotePreviewWidget(note, NoteViewScreen(note: note)),
                   );
                 },
               ),

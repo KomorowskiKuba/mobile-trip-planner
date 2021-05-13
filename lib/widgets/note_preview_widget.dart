@@ -10,8 +10,7 @@ class NotePreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 200, //TODO: change to dynamic
-      width: double.infinity, //TODO: change to dynamic
+      width: double.infinity,
       child: Card(
         color: Theme.of(context).primaryColor,
         child: Column(

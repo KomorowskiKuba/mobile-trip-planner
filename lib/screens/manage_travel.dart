@@ -7,6 +7,7 @@ import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 import 'package:mobile_trip_planner/widgets/travel_destination_widget.dart';
 
 import 'add_baggage_list.dart';
+import 'add_dates.dart';
 import 'add_notes.dart';
 import 'add_tickets.dart';
 
@@ -25,7 +26,15 @@ class TravelManageScreen extends StatelessWidget {
         child: Column(
           children: [
             TravelDestinationTile(travelDestination: _travel.destination),
-            DatePickAndDisplayTile(),
+            Center(
+                child: NextScreenTile(
+                    'Daty',
+                    Icon(
+                      Icons.calendar_today,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    AddDatesScreen()),
+              ),
             Center(
                 child: NextScreenTile(
                     'Rezerwacje',

@@ -10,8 +10,8 @@ class NextScreenTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100, //TODO: change to dynamic
-      width: double.infinity, //TODO: change to dynamic
+      height: MediaQuery.of(context).size.height * 0.12,
+      width: double.infinity,
       child: Card(
         color: Theme.of(context).primaryColor,
         child: Row(

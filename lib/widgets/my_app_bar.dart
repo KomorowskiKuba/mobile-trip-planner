@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_trip_planner/main.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   String _title;

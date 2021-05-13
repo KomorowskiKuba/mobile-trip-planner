@@ -1,36 +1,30 @@
 import 'package:flutter/material.dart';
 
 class CheckListItemWidget extends StatefulWidget {
-  final String _title;
+  final String title;
 
-  CheckListItemWidget(this._title);
-
-  String get title => _title;
+  CheckListItemWidget({key, this.title}) : super(key: key);
 
   @override
-  _CheckListItemWidgetState createState() => _CheckListItemWidgetState(
-      _title); //TODO: CHANGE to proper version, without constructor
+  _CheckListItemWidgetState createState() => _CheckListItemWidgetState();
 }
 
 class _CheckListItemWidgetState extends State<CheckListItemWidget> {
-  final String _title;
   bool _checkBoxValue = false;
   var _noteController;
 
-  _CheckListItemWidgetState(this._title);
-
   void initState() {
     super.initState();
-    if (_title != null) {
-      _noteController = TextEditingController(text: _title);
+    if (widget.title != null) {
+      _noteController = TextEditingController(text: widget.title);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80, //TODO: change to dynamic
-      width: double.infinity, //TODO: change to dynamic
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: double.infinity,
       child: Card(
         color: Theme.of(context).primaryColor,
         child: Row(

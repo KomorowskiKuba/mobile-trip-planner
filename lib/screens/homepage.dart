@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -26,18 +25,22 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Tip> _tips = [];
 
   List<Travel> _travels = [
-    Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel(
-        'Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel('Warszawa', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel(
-        'Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel(
-        'Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
-    Travel(
-        'Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg'))),
+    Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Warszawa', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
+    Travel('Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg')),
+        [DateTime.now(), DateTime.now()]),
   ];
 
   _loadName() async {
@@ -84,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Container(
-                width: double.infinity, //TODO: change to dynamic
+                width: double.infinity,
                 child: Card(
                   color: Theme.of(context).primaryColor,
                   child: Container(
@@ -98,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Theme.of(context).accentColor,
                                 fontSize: 35,
                               )),
-                        ), //TODO: change fonts
+                        ),
                         FutureBuilder(
                             future: _future,
                             builder: (context, AsyncSnapshot snapshot) {
