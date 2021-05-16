@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_trip_planner/geolocation/app_bloc.dart';
+import 'package:mobile_trip_planner/blocs/app_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'screens/homepage.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
     .then((_) {
       runApp(MyApp());
