@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:mobile_trip_planner/models/place_model.dart';
 import 'package:mobile_trip_planner/models/place_search.dart';
 import 'package:mobile_trip_planner/services/geolocator_service.dart';
 import 'package:mobile_trip_planner/services/places_service.dart';
@@ -10,6 +13,7 @@ class AppBloc with ChangeNotifier {
 
   Position currentLocation;
   List<PlaceSearch> searchResults;
+  StreamController<Place> selectedLocation = StreamController<Place>.broadcast();
 
   AppBloc() {
     setCurrentLocation();
@@ -24,5 +28,17 @@ class AppBloc with ChangeNotifier {
   searchPlaces(String searchTerm) async {
     searchResults = await placesService.getAutocomplete(searchTerm);
     notifyListeners();
+  }
+
+  setSelectedLocation(String placeId) async {
+    selectedLocation.add(await placesService.getPlace(placeId));
+    searchResults = null;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    selectedLocation.close();
+    super.dispose();
   }
 }

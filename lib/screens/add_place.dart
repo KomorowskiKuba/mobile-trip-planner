@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_trip_planner/blocs/app_bloc.dart';
+import 'package:mobile_trip_planner/models/place_model.dart';
 
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -19,16 +20,45 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   StreamSubscription locationSubscription;
 
+  Future<void> _goToPlace(Place place) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(place.geometry.location.lat, place.geometry.location.lng),
+          zoom: 10.0,
+        )
+      )
+    );
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
 
   @override
   void initState() {
-    final appBloc =
-        Provider.of<AppBloc>(context, listen: false);
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    
+    locationSubscription = appBloc.selectedLocation.stream.listen((place) {
+      if (place != null) {
+        _goToPlace(place);
+      } else {
+        _locationController.text = "";
+      }
+    });
+    
+    super.initState();
+  }
 
-    _locationController.text = "";
+  @override
+  void dispose() {
+    final appBloc = Provider.of<AppBloc>(context, listen: false);
+
+    appBloc.dispose();
+    _locationController.dispose();
+    locationSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -53,11 +83,11 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                           initialCameraPosition: CameraPosition(
                               target: LatLng(appBloc.currentLocation.latitude,
                                   appBloc.currentLocation.longitude),
-                              zoom: 11),
-                          onMapCreated: _onMapCreated,
+                              zoom: 10),
+                          onMapCreated: _onMapCreated
                         ),
                       ),
-                      if (appBloc.searchResults != null && appBloc.searchResults.length != 0 && _locationController.text.length != 0) 
+                      if (appBloc.searchResults != null && appBloc.searchResults.length != 0) // && _locationController.text.length != 0) 
                         Container(
                           height: double.infinity,
                           width: double.infinity,
@@ -74,12 +104,19 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                           child: ListView.builder(
                             itemCount: appBloc.searchResults.length,
                             itemBuilder: (context, index) {
-                              print('Current length: ${appBloc.searchResults.length}');
+                              
                               return ListTile(
-                                  title: Text(
-                                appBloc.searchResults[index].description,
-                                style: TextStyle(color: Colors.white),
-                              ));
+                                title: Text(
+                                  appBloc.searchResults[index].description,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onTap: () {
+                                  appBloc.setSelectedLocation(
+                                    appBloc.searchResults[index].placeId
+                                  );
+                                  //FocusScope.of(context).unfocus();
+                                },
+                              );
                             },
                           ),
                         )
