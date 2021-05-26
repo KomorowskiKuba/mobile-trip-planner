@@ -5,7 +5,7 @@ class YesNoSavingPopupWidget extends StatefulWidget {
   final String title;
   final String content;
 
-  const YesNoSavingPopupWidget({Key key, this.title, this.content})
+  const YesNoSavingPopupWidget({Key? key, required this.title, required this.content})
       : super(key: key);
 
   @override

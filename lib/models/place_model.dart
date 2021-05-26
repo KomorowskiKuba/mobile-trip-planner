@@ -5,7 +5,7 @@ class Place {
   final String name;
   final String vicinity;
 
-  Place({this.name, this.geometry, this.vicinity});
+  Place({required this.name, required this.geometry, required this.vicinity});
 
   factory Place.fromJson(Map<String, dynamic> parsedJson) {
     return Place(

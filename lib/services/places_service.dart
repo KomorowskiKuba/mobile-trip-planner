@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:ffi';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'package:mobile_trip_planner/models/place_search.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 class PlacesService  {
-  String key;
+  late String key;
 
   PlacesService() {
     key = FlutterConfig.get('GOOGLE_MAPS_KEY');

@@ -47,8 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       if (preferences.getString('userName') != null &&
-          preferences.getString('userName').length > 0) {
-        _name = preferences.getString('userName');
+          preferences.getString('userName')!.length > 0) {
+        _name = preferences.getString('userName')!;
       } else {
         _name = 'Nieznajomy';
       }

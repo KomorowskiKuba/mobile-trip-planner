@@ -17,13 +17,13 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
   final key = new GlobalKey<DatePickAndDisplayTileState>();
   List<DateTime> _dates = [DateTime.now(), DateTime.now()];
   int _amountOfDays = 7;
-  List<SingleDay> _days;
+  late List<SingleDay> _days;
 
   static List<SingleDay> generateDays(int amount) {
     List<SingleDay> days = [];
 
     for (int i = 1; i <= amount; i++) {
-      days.add(SingleDay(name: ('Dzień ' + i.toString())));
+      days.add(SingleDay(name: ('Dzień ' + i.toString()), activities: [], date: DateTime.now(), ));
     }
 
     return days;
@@ -90,6 +90,7 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
       ),
       onWillPop: () {
           Navigator.pop(context);
+          throw Exception(); //TODO WTF
       },
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CheckListItemWidget extends StatefulWidget {
   final String title;
 
-  CheckListItemWidget({key, this.title}) : super(key: key);
+  CheckListItemWidget({key, required this.title}) : super(key: key);
 
   @override
   _CheckListItemWidgetState createState() => _CheckListItemWidgetState();
@@ -32,7 +32,7 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
             Checkbox(
                 value: _checkBoxValue,
                 onChanged: (value) {
-                  setState(() => _checkBoxValue = value);
+                  setState(() => _checkBoxValue = value!);
                 }),
             SizedBox(
               width: 10,

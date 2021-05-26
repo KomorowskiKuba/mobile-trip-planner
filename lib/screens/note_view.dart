@@ -7,7 +7,7 @@ import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 class NoteViewScreen extends StatefulWidget {
   final Note note;
 
-  NoteViewScreen({key, this.note}) : super(key: key);
+  NoteViewScreen({key, required this.note}) : super(key: key);
 
   @override
   _NoteViewScreenState createState() => _NoteViewScreenState();

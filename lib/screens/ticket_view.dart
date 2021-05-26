@@ -11,7 +11,7 @@ import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 class TicketView extends StatefulWidget {
   Ticket ticket;
 
-  TicketView({Key key, this.ticket}) : super(key: key);
+  TicketView({Key? key, required this.ticket}) : super(key: key);
 
   @override
   _TicketViewState createState() => _TicketViewState();
@@ -20,10 +20,10 @@ class TicketView extends StatefulWidget {
 class _TicketViewState extends State<TicketView> {
   bool _isSaved = true;
   final picker = ImagePicker();
-  File _imageFile;
+  late File _imageFile;
 
   _getFromGallery() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
+    PickedFile? pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
     );
 

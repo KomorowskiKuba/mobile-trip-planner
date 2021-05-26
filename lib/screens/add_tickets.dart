@@ -44,7 +44,7 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
 
   _saveItem(String ticketName) async {
     setState(() {
-      _tickets.add(Ticket(ticketName, null));
+      _tickets.add(Ticket(ticketName, Image(image: AssetImage('lib/assets/images/paris.jpg'))));
     });
   }
 

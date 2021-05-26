@@ -28,7 +28,7 @@ class _NotesScreenState extends State<NotesScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(note: Note(null, null))));
+                  builder: (context) => NoteViewScreen(note: Note('', ''))));
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(

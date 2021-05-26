@@ -18,7 +18,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   Completer<GoogleMapController> _controller = Completer();
   final _locationController = TextEditingController();
 
-  StreamSubscription locationSubscription;
+  StreamSubscription? locationSubscription;
 
   Future<void> _goToPlace(Place place) async {
     final GoogleMapController controller = await _controller.future;
@@ -57,7 +57,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
     appBloc.dispose();
     _locationController.dispose();
-    locationSubscription.cancel();
+    locationSubscription!.cancel();
     super.dispose();
   }
 

@@ -7,7 +7,7 @@ import 'package:mobile_trip_planner/screens/add_place.dart';
 class TravelDestinationTile extends StatefulWidget {
   final String travelDestination;
 
-  TravelDestinationTile({key, this.travelDestination}) : super(key: key);
+  TravelDestinationTile({key, required this.travelDestination}) : super(key: key);
 
   @override
   _TravelDestinationTileState createState() => _TravelDestinationTileState();

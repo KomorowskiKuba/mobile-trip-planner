@@ -8,7 +8,7 @@ class BottomsheetInputWidget extends StatefulWidget {
   String text = "";
   TextEditingController controller;
 
-  BottomsheetInputWidget({Key key, this.hintText, this.controller, this.onPressedFunction, this.onWillPopFunction}) : super(key: key);
+  BottomsheetInputWidget({Key? key, required this.hintText, required this.controller, required this.onPressedFunction, required this.onWillPopFunction}) : super(key: key);
 
   @override
   _BottomsheetInputWidgetState createState() => _BottomsheetInputWidgetState();
@@ -52,7 +52,7 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
                                               MaterialStateProperty.all<Color>(
                                                   Theme.of(context)
                                                       .accentColor)),
-                                      onPressed: widget.onPressedFunction,                              
+                                      onPressed: widget.onPressedFunction(),                              
                                       child: Text(
                                         'Zapisz',
                                         style: TextStyle(
@@ -62,7 +62,7 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
                           ),
                         ),
                       ),
-                      onWillPop: widget.onWillPopFunction,
+                      onWillPop: widget.onWillPopFunction(),
                     ),
                   ]);
   }

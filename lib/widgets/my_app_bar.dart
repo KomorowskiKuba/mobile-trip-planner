@@ -25,7 +25,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(right: 20),
           child: GestureDetector(
-            onTap: _function,
+            onTap: _function(),
             child: _icon,
           ),
         )

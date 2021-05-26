@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class DatePickAndDisplayTile extends StatefulWidget {
   List<DateTime> dates;
-  DatePickAndDisplayTile({Key key, this.dates}) : super(key: key);
+  DatePickAndDisplayTile({Key? key, required this.dates}) : super(key: key);
 
   @override
   DatePickAndDisplayTileState createState() => DatePickAndDisplayTileState();
