@@ -13,12 +13,12 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   final List<Note> _notes = [
-    Note('Note 1',
-        'Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper.Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper.Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt.'),
-    Note('Note 2', 'Nothing here yet!'),
-    Note('Note 3', 'Nothing here yet!'),
-    Note('Note 4', 'Nothing here yet!'),
-    Note('Note 5', 'Nothing here yet!'),
+    Note(travelId: 1, title: 'Note 1',
+        content: 'Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper.Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper.Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Etiam vulputate sollicitudin dolor in venenatis. In volutpat in lorem vestibulum semper. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt. Sed ac ultricies justo. Vestibulum auctor laoreet massa, sed porta tellus placerat a. Ut egestas ac urna nec tincidunt.'),
+    Note(travelId: 1, title: 'Note 2', content: 'Nothing here yet!'),
+    Note(travelId: 1, title: 'Note 3', content: 'Nothing here yet!'),
+    Note(travelId: 1, title: 'Note 4', content: 'Nothing here yet!'),
+    Note(travelId: 1, title: 'Note 5', content: 'Nothing here yet!'),
   ];
 
   @override
@@ -28,7 +28,7 @@ class _NotesScreenState extends State<NotesScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(note: Note('', ''))));
+                  builder: (context) => NoteViewScreen(note: Note(travelId: 1, noteId: _notes.length + 1, title: '', content: ''))));
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(
