@@ -56,6 +56,52 @@ class NotesDatabaseHelper {
     return note.copy(noteId: noteId);
   }
 
+  Future<Note> readNote(int noteId) async {
+    final database = await instance.database;
+
+    final maps = await database.query(
+      tableName,
+      columns: NoteFields.values,
+      where: '${NoteFields.noteId} = ?',
+      whereArgs: [noteId]
+    );
+
+    if (maps.isNotEmpty) {
+      return Note.fromJson(maps.first);
+    } else {
+      throw Exception('Id not found!');
+    }
+  }
+
+  Future<List<Note>> readAllNotes() async {
+    final database = await instance.database;
+
+    final result = await database.query(tableName);
+
+    return result.map((json) => Note.fromJson(json)).toList();
+  }
+
+  Future<int> update(Note note) async {
+    final database = await instance.database;
+
+    return database.update(
+      tableName,
+      note.toJson(),
+      where: '${NoteFields.noteId} = ?',
+      whereArgs: [note.noteId]
+    );
+  }
+
+  Future<int> delete(int noteId) async {
+    final database = await instance.database;
+
+    return await database.delete(
+      tableName,
+      where: '${NoteFields.noteId} = ?',
+      whereArgs: [noteId]
+    );
+  }
+
   Future close() async {
     final database = await instance.database;
 

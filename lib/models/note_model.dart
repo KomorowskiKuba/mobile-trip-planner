@@ -1,6 +1,10 @@
 final String tableName = 'notes_database';
 
 class NoteFields {
+  static final List<String> values = [
+    travelId, noteId, title, content
+  ];
+
   static final String travelId = 'travelId';
   static final String noteId = 'noteId';
   static final String title = 'title';
@@ -15,6 +19,13 @@ class Note {
   final String content;
 
   const Note({required this.travelId, this.noteId, required this.title, required this.content});
+
+  static Note fromJson(Map<String, dynamic> json) => Note(
+    noteId: json[NoteFields.noteId] as int?,
+    travelId: json[NoteFields.travelId] as int,
+    title: json[NoteFields.travelId] as String,
+    content: json[NoteFields.content] as String,
+  );
 
   Map<String, dynamic> toJson() => {
     NoteFields.noteId: noteId,
