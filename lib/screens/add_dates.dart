@@ -6,7 +6,6 @@ import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.da
 import 'package:mobile_trip_planner/widgets/date_pick_and_display_tile.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 
 class AddDatesScreen extends StatefulWidget {
   @override
@@ -16,8 +15,11 @@ class AddDatesScreen extends StatefulWidget {
 class _AddDatesScreenState extends State<AddDatesScreen> {
   final key = new GlobalKey<DatePickAndDisplayTileState>();
   List<DateTime> _dates = [DateTime.now(), DateTime.now()];
-  int _amountOfDays = 7;
   late List<SingleDay> _days;
+  late DateTimeRange dateRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(Duration(days: 7))
+  );
 
   static List<SingleDay> generateDays(int amount) {
     List<SingleDay> days = [];
@@ -25,15 +27,33 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
     for (int i = 1; i <= amount; i++) {
       days.add(SingleDay(name: ('Dzień ' + i.toString()), activities: [], date: DateTime.now(), ));
     }
-
+    
     return days;
+  }
+
+  Future pickRange(BuildContext context) async {
+    final initialDateRange = DateTimeRange(
+      start: DateTime.now(),
+      end: DateTime.now().add(Duration(days: 7))
+    );
+
+    final newDateRange = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+      initialDateRange: dateRange
+    );
+
+    if (newDateRange == null) return;
+
+    setState(() => dateRange = newDateRange);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        appBar: MyAppBar.withoutIcons('Dodaj daty'),
+        appBar: MyAppBar.withoutIcons('Dodaj daty', () {}),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(
           children: [
@@ -41,27 +61,10 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
               height: 5,
             ),
             InkWell(
-                child: DatePickAndDisplayTile(key: key, dates: _dates),
-                onTap: () async {
-                  final List<DateTime> picked =
-                      await DateRangePicker.showDatePicker(
-                    context: context,
-                    initialFirstDate: DateTime.now(),
-                    initialLastDate: (DateTime.now()).add(Duration(days: 7)),
-                    firstDate: DateTime(2015),
-                    lastDate: DateTime(2040),
-                  );
-
-                  if (picked != null && picked.length == 2) {
-                    setState(() {
-                      _dates = picked;
-                      _amountOfDays = _dates[1].day - _dates[0].day + 1;
-                      _days = generateDays(_amountOfDays);
-                      print(_amountOfDays);
-                    });
-                  }
-                }),
-            _days == null ? Container(
+                child: DatePickAndDisplayTile(key: key, dates: [dateRange.start, dateRange.end]),
+                onTap: () => pickRange(context)
+            ),
+            /*dateRange == null ? Container(
              width: 1,
              height: 1, 
             ) 
@@ -84,7 +87,7 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
                   );
                 },
               ),
-            ),
+            ),*/
           ],
         ),
       ),

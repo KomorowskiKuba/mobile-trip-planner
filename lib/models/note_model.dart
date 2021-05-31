@@ -27,8 +27,9 @@ class Note {
     content: json[NoteFields.content] as String,
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toJson() => {
     NoteFields.noteId: noteId,
+    NoteFields.travelId: travelId,
     NoteFields.title: title,
     NoteFields.content: content
   };

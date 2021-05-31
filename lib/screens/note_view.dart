@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/database_helpers/notes_database_helper.dart';
 import 'package:mobile_trip_planner/models/note_model.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
@@ -29,10 +30,13 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-          appBar: MyAppBar('Notatka', Icon(Icons.save), () {
+          appBar: MyAppBar('Notatka', Icon(Icons.save), () async {
             if (!_isSaved) {
               _isSaved = true;
               //save
+              print(_titleController.toString());
+              Note note = Note(travelId: 1, noteId: 19, title: _titleController.toString(), content: _contentController.toString());
+              await NotesDatabaseHelper.instance.create(note);
               SavedSnackBar.buildSavedSnackBar(context);
             }
           }),

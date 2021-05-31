@@ -27,7 +27,7 @@ class NotesDatabaseHelper {
   
   Future _createDB(Database database, int version) async {
     final travelIdType = 'INTEGER NOT NULL';
-    final noteIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    final noteIdType = 'INTEGER PRIMARY KEY';
     final titleType = 'TEXT NOT NULL';
     final contentType = 'TEXT NOT NULL';
 
@@ -36,8 +36,8 @@ class NotesDatabaseHelper {
         CREATE TABLE $tableName (
           ${NoteFields.travelId} $travelIdType,
           ${NoteFields.noteId} $noteIdType,
-          ${NoteFields.noteId} $titleType,
-          ${NoteFields.content} $contentType,
+          ${NoteFields.title} $titleType,
+          ${NoteFields.content} $contentType
         )
       '''
     );

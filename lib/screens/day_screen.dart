@@ -10,7 +10,7 @@ class DayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons(day!.name),
+      appBar: MyAppBar.withoutIcons(day!.name, () {}),
       backgroundColor: Theme.of(context).backgroundColor,
     );
   }

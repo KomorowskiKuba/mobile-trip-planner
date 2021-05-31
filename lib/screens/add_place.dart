@@ -66,7 +66,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     final appBloc = Provider.of<AppBloc>(context);
 
     return Scaffold(
-        appBar: MyAppBar.withoutIcons('Dodaj miejsce'),
+        appBar: MyAppBar.withoutIcons('Dodaj miejsce', () {}),
         backgroundColor: Theme.of(context).primaryColor,
         body: Stack(
           children: [

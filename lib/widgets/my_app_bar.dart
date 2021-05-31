@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MyAppBar extends StatelessWidget with PreferredSizeWidget {
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   String _title;
   final double _height = kToolbarHeight;
   Icon _icon = Icon(null);
-  Function _function = () {};
+  Function _function;
 
   MyAppBar(this._title, this._icon, this._function);
 
-  MyAppBar.withoutIcons(this._title);
+  MyAppBar.withoutIcons(this._title, this._function);
 
   @override
   Size get preferredSize => Size.fromHeight(_height);
@@ -22,13 +22,17 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         style: TextStyle(color: Colors.white),
       ),
       actions: [
-        Padding(
+        IconButton(
+          onPressed: () => _function(),
+          icon: _icon
+        )
+        /*Padding(
           padding: EdgeInsets.only(right: 20),
           child: GestureDetector(
-            onTap: _function(),
+            onTap: _function,
             child: _icon,
           ),
-        )
+        )*/
       ],
     );
   }
