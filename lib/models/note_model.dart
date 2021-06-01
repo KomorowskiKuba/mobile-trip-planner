@@ -15,15 +15,15 @@ class NoteFields {
 class Note {
   final int travelId;
   final int? noteId;
-  final String title;
-  final String content;
+  String title;
+  String content;
 
-  const Note({required this.travelId, this.noteId, required this.title, required this.content});
+  Note({required this.travelId, this.noteId, required this.title, required this.content});
 
   static Note fromJson(Map<String, dynamic> json) => Note(
     noteId: json[NoteFields.noteId] as int?,
     travelId: json[NoteFields.travelId] as int,
-    title: json[NoteFields.travelId] as String,
+    title: json[NoteFields.title] as String,
     content: json[NoteFields.content] as String,
   );
 
@@ -46,4 +46,9 @@ class Note {
     content: content ?? this.content
   );
 
+  @override
+  String toString() {
+    String s = 'NOTATKA: ' + title + ', ' + content;
+    return s;
+  }
 }

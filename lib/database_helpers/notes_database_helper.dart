@@ -27,7 +27,7 @@ class NotesDatabaseHelper {
   
   Future _createDB(Database database, int version) async {
     final travelIdType = 'INTEGER NOT NULL';
-    final noteIdType = 'INTEGER PRIMARY KEY';
+    final noteIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT'; //TODO: GŁÓWNY PROBLEM JEST Z TYM ŻE NUMER ID NIE JEST UNIKALNY
     final titleType = 'TEXT NOT NULL';
     final contentType = 'TEXT NOT NULL';
 
@@ -45,14 +45,8 @@ class NotesDatabaseHelper {
 
   Future<Note> create(Note note) async {
     final database = await instance.database;
-
-    //final json = note.toJson();
-    //final columns = '${NoteFields.travelId}, ${NoteFields.title}, ${NoteFields.content}';
-    //final values = '${json[NoteFields.travelId]}, ${json[NoteFields.title]}, ${json[NoteFields.content]}';
-
-    //final noteId = await database.rawInsert('INSERT INTO tableName')
-
     final noteId = await database.insert(tableName, note.toJson());
+
     return note.copy(noteId: noteId);
   }
 
@@ -92,7 +86,7 @@ class NotesDatabaseHelper {
     );
   }
 
-  Future<int> delete(int noteId) async {
+  Future<int> delete(int? noteId) async {
     final database = await instance.database;
 
     return await database.delete(

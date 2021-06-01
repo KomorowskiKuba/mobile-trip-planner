@@ -13,19 +13,18 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  late List<Note> _notes;
+  List<Note> _notes = [];
   bool isLoading = false;
 
   @override
   void initState() {
-    // TODO: implement initState
-    loadNotes();
     super.initState();
+    loadNotes();
   }
 
   @override
   void dispose() {
-    NotesDatabaseHelper.instance.close();
+    //NotesDatabaseHelper.instance.close();
 
     super.dispose();
   }
@@ -43,7 +42,7 @@ class _NotesScreenState extends State<NotesScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(note: Note(travelId: 1, noteId: 1, title: '', content: ''))));
+                  builder: (context) => NoteViewScreen(note: Note(travelId: 1,  title: '', content: '')))).whenComplete(loadNotes);
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: isLoading
@@ -65,7 +64,9 @@ class _NotesScreenState extends State<NotesScreen> {
                     key: Key(note.title),
                     onDismissed: (direction) {
                       setState(() {
+                        NotesDatabaseHelper.instance.delete(note.noteId);
                         _notes.removeAt(index);
+                        loadNotes();
                       });
                     },
                     child: NotePreviewWidget(note, NoteViewScreen(note: note)),

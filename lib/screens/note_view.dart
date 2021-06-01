@@ -6,7 +6,7 @@ import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class NoteViewScreen extends StatefulWidget {
-  final Note note;
+  Note note;
 
   NoteViewScreen({key, required this.note}) : super(key: key);
 
@@ -28,15 +28,16 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Note currentNote = widget.note;
     return WillPopScope(
       child: Scaffold(
           appBar: MyAppBar('Notatka', Icon(Icons.save), () async {
             if (!_isSaved) {
               _isSaved = true;
-              //save
-              print(_titleController.toString());
-              Note note = Note(travelId: 1, noteId: 19, title: _titleController.toString(), content: _contentController.toString());
-              await NotesDatabaseHelper.instance.create(note);
+              //Note note = Note(travelId: 1, title: _titleController.text, content: _contentController.text); //TODO CHANGE TRAVELID
+              currentNote.title = _titleController.text;
+              currentNote.content = _contentController.text;
+              await NotesDatabaseHelper.instance.create(currentNote);
               SavedSnackBar.buildSavedSnackBar(context);
             }
           }),
