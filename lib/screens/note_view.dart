@@ -6,9 +6,9 @@ import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class NoteViewScreen extends StatefulWidget {
-  Note note;
+  Note? note;
 
-  NoteViewScreen({key, required this.note}) : super(key: key);
+  NoteViewScreen({key, this.note}) : super(key: key);
 
   @override
   _NoteViewScreenState createState() => _NoteViewScreenState();
@@ -16,28 +16,54 @@ class NoteViewScreen extends StatefulWidget {
 
 class _NoteViewScreenState extends State<NoteViewScreen> {
   bool _isSaved = false;
+
+  late Note note;
+  late bool _isEdit;
+
   var _titleController;
   var _contentController;
 
   @override
   void initState() {
-    super.initState();
-    _titleController = TextEditingController(text: widget.note.title);
-    _contentController = TextEditingController(text: widget.note.content);
+    if (widget.note == null) {
+      note = Note(travelId: 1, title: '', content: '');
+
+      print(note.toString());
+
+      _isEdit = false;
+
+      _titleController = TextEditingController(text: '');
+      _contentController = TextEditingController(text: '');
+    } else {
+      note = widget.note!;
+
+      super.initState();
+
+      _isEdit = true;
+
+      _titleController = TextEditingController(text: widget.note!.title);
+      _contentController = TextEditingController(text: widget.note!.content);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Note currentNote = widget.note;
     return WillPopScope(
       child: Scaffold(
-          appBar: MyAppBar('Notatka', Icon(Icons.save), () async {
+          appBar: MyAppBar('Notatka', Icon(Icons.save), () {
             if (!_isSaved) {
               _isSaved = true;
-              //Note note = Note(travelId: 1, title: _titleController.text, content: _contentController.text); //TODO CHANGE TRAVELID
-              currentNote.title = _titleController.text;
-              currentNote.content = _contentController.text;
-              await NotesDatabaseHelper.instance.create(currentNote);
+              print('HALKO' + _titleController.text);
+              note.title = _titleController.text;
+              note.content = _contentController.text;
+
+              if (_isEdit) {
+                NotesDatabaseHelper.instance.update(note);
+                print("note" + note.toString());
+              } else {
+                NotesDatabaseHelper.instance.create(note);
+              }
+
               SavedSnackBar.buildSavedSnackBar(context);
             }
           }),

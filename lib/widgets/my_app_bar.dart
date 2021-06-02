@@ -26,13 +26,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () => _function(),
           icon: _icon
         )
-        /*Padding(
-          padding: EdgeInsets.only(right: 20),
-          child: GestureDetector(
-            onTap: _function,
-            child: _icon,
-          ),
-        )*/
       ],
     );
   }

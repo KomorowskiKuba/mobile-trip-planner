@@ -39,42 +39,47 @@ class _NotesScreenState extends State<NotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar('Dodaj notatki', Icon(Icons.add), () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => NoteViewScreen(note: Note(travelId: 1,  title: '', content: '')))).whenComplete(loadNotes);
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NoteViewScreen()))
+              .whenComplete(loadNotes);
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: isLoading
-         ? CircularProgressIndicator()
-         : Column(
-          children: [
-            SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _notes.length,
-                itemBuilder: (context, index) {
-                  final note = _notes[index];
+            ? CircularProgressIndicator()
+            : Column(
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _notes.length,
+                      itemBuilder: (context, index) {
+                        final note = _notes[index];
 
-                  return Dismissible(
-                    direction: DismissDirection.startToEnd,
-                    background: DismissibleItemBackground(),
-                    key: Key(note.title),
-                    onDismissed: (direction) {
-                      setState(() {
-                        NotesDatabaseHelper.instance.delete(note.noteId);
-                        _notes.removeAt(index);
-                        loadNotes();
-                      });
-                    },
-                    child: NotePreviewWidget(note, NoteViewScreen(note: note)),
-                  );
-                },
-              ),
-            ),
-          ],
-        ));
+                        return Dismissible(
+                            direction: DismissDirection.startToEnd,
+                            background: DismissibleItemBackground(),
+                            key: Key(note.title),
+                            onDismissed: (direction) {
+                              setState(() {
+                                NotesDatabaseHelper.instance
+                                    .delete(note.noteId);
+                                _notes.removeAt(index);
+                                loadNotes();
+                              });
+                            },
+                            child: NotePreviewWidget(note, () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NoteViewScreen(note: note))).whenComplete(loadNotes);
+                            }));
+                      },
+                    ),
+                  ),
+                ],
+              ));
   }
 }

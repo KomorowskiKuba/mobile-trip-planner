@@ -3,9 +3,10 @@ import 'package:mobile_trip_planner/models/note_model.dart';
 
 class NotePreviewWidget extends StatelessWidget {
   final Note _note;
-  final Widget _nextScreen;
+  //final Widget _nextScreen;
+  final Function _function;
 
-  NotePreviewWidget(this._note, this._nextScreen);
+  NotePreviewWidget(this._note, this._function);
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +45,7 @@ class NotePreviewWidget extends StatelessWidget {
                     size: 30,
                     color: Theme.of(context).accentColor,
                   ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => _nextScreen));
-                  },
+                  onPressed: () => _function(),
                 )
               ],
             ),

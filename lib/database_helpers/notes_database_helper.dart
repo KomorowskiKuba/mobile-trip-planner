@@ -27,7 +27,7 @@ class NotesDatabaseHelper {
   
   Future _createDB(Database database, int version) async {
     final travelIdType = 'INTEGER NOT NULL';
-    final noteIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT'; //TODO: GŁÓWNY PROBLEM JEST Z TYM ŻE NUMER ID NIE JEST UNIKALNY
+    final noteIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final titleType = 'TEXT NOT NULL';
     final contentType = 'TEXT NOT NULL';
 
