@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/models/checklist_item_model.dart';
 
 class CheckListItemWidget extends StatefulWidget {
-  final String title;
+  final ChecklistItem item;
 
-  CheckListItemWidget({key, required this.title}) : super(key: key);
+  CheckListItemWidget({key, required this.item}) : super(key: key);
 
   @override
   _CheckListItemWidgetState createState() => _CheckListItemWidgetState();
@@ -15,8 +16,9 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
 
   void initState() {
     super.initState();
-    if (widget.title != null) {
-      _noteController = TextEditingController(text: widget.title);
+    if (widget.item.itemName != null) {
+      _noteController = TextEditingController(text: widget.item.itemName);
+      _checkBoxValue = widget.item.checked == 0 ? false : true;
     }
   }
 

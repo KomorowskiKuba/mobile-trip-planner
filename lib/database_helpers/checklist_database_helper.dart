@@ -27,6 +27,7 @@ class ChecklistDatabaseHelper {
 
   Future _createDB(Database database, int version) async {
     final travelIdType = 'INTEGER NOT NULL';
+    final itemIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final itemType = 'TEXT NOT NULL';
     final checked = 'BOOLEAN NOT NULL';
 
@@ -34,6 +35,7 @@ class ChecklistDatabaseHelper {
       '''
         CREATE TABLE $tableName (
           ${ChecklistItemFields.travelId} $travelIdType,
+          ${ChecklistItemFields.itemId} $itemIdType,
           ${ChecklistItemFields.itemName} $itemType,
           ${ChecklistItemFields.checked} $checked
         )
@@ -46,5 +48,29 @@ class ChecklistDatabaseHelper {
     final itemId = await database.insert(tableName, checklistItem.toJson());
 
     return checklistItem.copy(itemId: itemId);
+  }
+
+  Future<List<ChecklistItem>> readAllChecklistItems() async {
+    final database = await instance.database;
+
+    final result = await database.query(tableName);
+
+    return result.map((json) => ChecklistItem.fromJson(json)).toList();
+  } 
+
+  Future<int> delete(int? itemId) async {
+    final database = await instance.database;
+
+    return await database.delete(
+      tableName,
+      where: '${ChecklistItemFields.itemId} = ?',
+      whereArgs: [itemId]
+    );
+  }
+
+  Future close() async {
+    final database = await instance.database;
+
+    database.close();
   }
 }

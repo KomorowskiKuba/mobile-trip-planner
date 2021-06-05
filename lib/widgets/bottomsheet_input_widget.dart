@@ -20,7 +20,7 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
     return Wrap(children: [
                     WillPopScope(
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.15,
                         color: Theme.of(context).backgroundColor,
                         child: Center(
                           child: Column(
@@ -52,7 +52,7 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
                                               MaterialStateProperty.all<Color>(
                                                   Theme.of(context)
                                                       .accentColor)),
-                                      onPressed: widget.onPressedFunction(),                              
+                                      onPressed: () => widget.onPressedFunction(),                              
                                       child: Text(
                                         'Zapisz',
                                         style: TextStyle(
@@ -62,7 +62,7 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
                           ),
                         ),
                       ),
-                      onWillPop: widget.onWillPopFunction(),
+                      onWillPop: () => widget.onWillPopFunction(),
                     ),
                   ]);
   }

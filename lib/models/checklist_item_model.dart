@@ -1,5 +1,3 @@
-import 'package:mobile_trip_planner/widgets/checklist_item_widget.dart';
-
 final String tableName = 'checklist_database';
 
 class ChecklistItemFields {
@@ -18,7 +16,7 @@ class ChecklistItem {
   final int travelId;
   final int? itemId;
   String itemName;
-  bool checked;
+  int checked;
 
   ChecklistItem({required this.travelId, this.itemId, required this.itemName, required this.checked});
 
@@ -26,7 +24,7 @@ class ChecklistItem {
     travelId: json[ChecklistItemFields.travelId] as int,
     itemId: json[ChecklistItemFields.itemId] as int?,
     itemName: json[ChecklistItemFields.itemName] as String,
-    checked: json[ChecklistItemFields.checked] as bool
+    checked: json[ChecklistItemFields.checked] as int
   );
 
   Map<String, Object?> toJson() => {
@@ -40,7 +38,7 @@ class ChecklistItem {
     int? itemId,
     int? travelId,
     String? itemName,
-    bool? checked
+    int? checked
   }) => ChecklistItem(
     itemId: itemId ?? this.itemId,
     travelId: travelId ?? this.travelId,
