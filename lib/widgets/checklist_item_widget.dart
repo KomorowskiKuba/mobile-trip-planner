@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/database_helpers/checklist_database_helper.dart';
 import 'package:mobile_trip_planner/models/checklist_item_model.dart';
 
 class CheckListItemWidget extends StatefulWidget {
@@ -12,12 +13,12 @@ class CheckListItemWidget extends StatefulWidget {
 
 class _CheckListItemWidgetState extends State<CheckListItemWidget> {
   bool _checkBoxValue = false;
-  var _noteController;
+  var _itemController;
 
   void initState() {
     super.initState();
     if (widget.item.itemName != null) {
-      _noteController = TextEditingController(text: widget.item.itemName);
+      _itemController = TextEditingController(text: widget.item.itemName);
       _checkBoxValue = widget.item.checked == 0 ? false : true;
     }
   }
@@ -35,6 +36,8 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
                 value: _checkBoxValue,
                 onChanged: (value) {
                   setState(() => _checkBoxValue = value!);
+                  widget.item.checked = _checkBoxValue == false ? 0 : 1;
+                  ChecklistDatabaseHelper.instance.update(widget.item);
                 }),
             SizedBox(
               width: 10,
@@ -46,7 +49,7 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
                   onSubmitted: (val) {
                     FocusScope.of(context).unfocus();
                   },
-                  controller: _noteController,
+                  controller: _itemController,
                   textCapitalization: TextCapitalization.sentences,
                   style: TextStyle(fontSize: 25, color: Colors.white),
                   decoration: InputDecoration(

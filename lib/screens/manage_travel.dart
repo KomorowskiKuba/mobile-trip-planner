@@ -27,14 +27,14 @@ class TravelManageScreen extends StatelessWidget {
           children: [
             TravelDestinationTile(travelDestination: _travel.destination),
             Center(
-                child: NextScreenTile(
-                    'Daty',
-                    Icon(
-                      Icons.calendar_today,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    AddDatesScreen()),
-              ),
+              child: NextScreenTile(
+                  'Daty',
+                  Icon(
+                    Icons.calendar_today,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  AddDatesScreen()),
+            ),
             Center(
                 child: NextScreenTile(
                     'Rezerwacje',

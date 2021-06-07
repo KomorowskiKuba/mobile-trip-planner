@@ -47,13 +47,12 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                   padding: MediaQuery.of(context).viewInsets,
                   child: Container(
                     child: BottomsheetInputWidget(
-                      
                       hintText: 'Nazwa przedmiotu',
                       controller: _myController,
                       onPressedFunction: () {
                         _text = _myController.text;
-                        ChecklistItem item =
-                            ChecklistItem(travelId: 1, itemName: _text, checked: 0);
+                        ChecklistItem item = ChecklistItem(
+                            travelId: 1, itemName: _text, checked: 0);
                         ChecklistDatabaseHelper.instance.create(item);
                         _saveItem(item);
                         _myController.clear();
@@ -91,7 +90,8 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                           key: Key(item.itemName),
                           onDismissed: (direction) {
                             //setState(() {
-                             ChecklistDatabaseHelper.instance.delete(item.itemId);
+                            ChecklistDatabaseHelper.instance
+                                .delete(item.itemId);
                             //});
                           },
                           child: CheckListItemWidget(item: item),

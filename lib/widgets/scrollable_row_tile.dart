@@ -31,14 +31,14 @@ class ScrollableRowTile extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      for (var currentTravel in _travels) TripPreviewTile(currentTravel),
+                      for (var currentTravel in _travels)
+                        TripPreviewTile(currentTravel),
                     ],
                   ),
                 )
               ],
             ),
           ),
-        )
-      );
+        ));
   }
 }

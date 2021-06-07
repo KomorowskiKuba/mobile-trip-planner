@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_trip_planner/models/ticket_model.dart';
+import 'package:mobile_trip_planner/models/reservation_model.dart';
 import 'package:mobile_trip_planner/screens/ticket_view.dart';
 import 'package:mobile_trip_planner/widgets/bottomsheet_input_widget.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
@@ -14,37 +14,31 @@ class AddTicketsScreen extends StatefulWidget {
 class _AddTicketsScreenState extends State<AddTicketsScreen> {
   String _text = "";
   final _myController = TextEditingController();
-  final List<Ticket> _tickets = [
-    Ticket(
-        'Ticket 1',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 2',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 3',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 4',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        )),
-    Ticket(
-        'Ticket 5',
-        Image(
-          image: AssetImage('lib/assets/images/paris.jpg'),
-        ))
+  final List<Reservation> _tickets = [
+    Reservation(
+        travelId: 1,
+        title: 'Ticket 1',
+        imagePath: 'lib/assets/images/paris.jpg'),
+    Reservation(
+        travelId: 1,
+        title: 'Ticket 2',
+        imagePath: 'lib/assets/images/paris.jpg'),
+    Reservation(
+        travelId: 1,
+        title: 'Ticket 3',
+        imagePath: 'lib/assets/images/paris.jpg'),
+    Reservation(
+        travelId: 1,
+        title: 'Ticket 4',
+        imagePath: 'lib/assets/images/paris.jpg'),
   ];
 
   _saveItem(String ticketName) async {
     setState(() {
-      _tickets.add(Ticket(ticketName, Image(image: AssetImage('lib/assets/images/paris.jpg'))));
+      _tickets.add(Reservation(
+          title: ticketName,
+          imagePath: 'lib/assets/images/paris.jpg',
+          travelId: 1));
     });
   }
 
@@ -53,25 +47,25 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
     return Scaffold(
         appBar: MyAppBar('Dodaj bilety i rezerwacje', Icon(Icons.add), () {
           showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return BottomsheetInputWidget(
-                    hintText: 'Nazwa biletu',
-                    controller: _myController,
-                    onPressedFunction: () {
-                      _text = _myController.text;
-                      _saveItem(_text);
-                      _myController.clear();
-                      Navigator.pop(context, _text);
-                    },
-                    onWillPopFunction: () {
-                      _myController.clear();
-                      Navigator.pop(context, _text);
-                      throw Exception();
-                    },
-                  );
-                });
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context) {
+                return BottomsheetInputWidget(
+                  hintText: 'Nazwa biletu',
+                  controller: _myController,
+                  onPressedFunction: () {
+                    _text = _myController.text;
+                    _saveItem(_text);
+                    _myController.clear();
+                    Navigator.pop(context, _text);
+                  },
+                  onWillPopFunction: () {
+                    _myController.clear();
+                    Navigator.pop(context, _text);
+                    throw Exception();
+                  },
+                );
+              });
         }),
         backgroundColor: Theme.of(context).backgroundColor,
         body: Column(

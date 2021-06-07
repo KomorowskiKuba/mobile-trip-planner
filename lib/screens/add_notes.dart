@@ -71,10 +71,11 @@ class _NotesScreenState extends State<NotesScreen> {
                             },
                             child: NotePreviewWidget(note, () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          NoteViewScreen(note: note))).whenComplete(loadNotes);
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              NoteViewScreen(note: note)))
+                                  .whenComplete(loadNotes);
                             }));
                       },
                     ),

@@ -13,13 +13,14 @@ class AppBloc with ChangeNotifier {
 
   late Position currentLocation;
   late List<PlaceSearch> searchResults;
-  late StreamController<Place> selectedLocation = StreamController<Place>.broadcast();
+  late StreamController<Place> selectedLocation =
+      StreamController<Place>.broadcast();
 
   AppBloc() {
     setCurrentLocation();
   }
 
-  setCurrentLocation() async { 
+  setCurrentLocation() async {
     currentLocation = await geolocatorService.getCurrentLocation();
     print(currentLocation);
     notifyListeners();

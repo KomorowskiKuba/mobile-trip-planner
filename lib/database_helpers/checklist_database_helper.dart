@@ -3,7 +3,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ChecklistDatabaseHelper {
-  static final ChecklistDatabaseHelper instance = ChecklistDatabaseHelper._init();
+  static final ChecklistDatabaseHelper instance =
+      ChecklistDatabaseHelper._init();
 
   static Database? _database;
 
@@ -31,16 +32,14 @@ class ChecklistDatabaseHelper {
     final itemType = 'TEXT NOT NULL';
     final checked = 'BOOLEAN NOT NULL';
 
-    database.execute(
-      '''
+    database.execute('''
         CREATE TABLE $tableName (
           ${ChecklistItemFields.travelId} $travelIdType,
           ${ChecklistItemFields.itemId} $itemIdType,
           ${ChecklistItemFields.itemName} $itemType,
           ${ChecklistItemFields.checked} $checked
         )
-      '''
-    );
+      ''');
   }
 
   Future<ChecklistItem> create(ChecklistItem checklistItem) async {
@@ -50,22 +49,25 @@ class ChecklistDatabaseHelper {
     return checklistItem.copy(itemId: itemId);
   }
 
-  Future<List<ChecklistItem>> readAllChecklistItems() async {
+  Future<int> update(ChecklistItem item) async {
     final database = await instance.database;
 
+    return database.update(tableName, item.toJson(),
+        where: '${ChecklistItemFields.itemId} = ?', whereArgs: [item.itemId]);
+  }
+
+  Future<List<ChecklistItem>> readAllChecklistItems() async {
+    final database = await instance.database;
     final result = await database.query(tableName);
 
     return result.map((json) => ChecklistItem.fromJson(json)).toList();
-  } 
+  }
 
   Future<int> delete(int? itemId) async {
     final database = await instance.database;
 
-    return await database.delete(
-      tableName,
-      where: '${ChecklistItemFields.itemId} = ?',
-      whereArgs: [itemId]
-    );
+    return await database.delete(tableName,
+        where: '${ChecklistItemFields.itemId} = ?', whereArgs: [itemId]);
   }
 
   Future close() async {

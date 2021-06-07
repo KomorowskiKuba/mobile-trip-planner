@@ -25,7 +25,8 @@ class TripPreviewTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(_travel.destination, style: TextStyle(fontSize: 25, color: Colors.white)),
+                child: Text(_travel.destination,
+                    style: TextStyle(fontSize: 25, color: Colors.white)),
               ),
               Container(
                 padding: EdgeInsets.all(5),
@@ -39,8 +40,10 @@ class TripPreviewTile extends StatelessWidget {
           ),
         ),
         onTap: () {
-          Navigator.push(context,
-            MaterialPageRoute(builder: (context) => TravelManageScreen(_travel)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => TravelManageScreen(_travel)));
         },
       ),
     );

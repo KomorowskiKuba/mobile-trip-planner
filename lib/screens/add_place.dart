@@ -22,14 +22,10 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   Future<void> _goToPlace(Place place) async {
     final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(place.geometry.location.lat, place.geometry.location.lng),
-          zoom: 10.0,
-        )
-      )
-    );
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(place.geometry.location.lat, place.geometry.location.lng),
+      zoom: 10.0,
+    )));
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -39,7 +35,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   @override
   void initState() {
     final appBloc = Provider.of<AppBloc>(context, listen: false);
-    
+
     locationSubscription = appBloc.selectedLocation.stream.listen((place) {
       if (place != null) {
         _goToPlace(place);
@@ -47,7 +43,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
         _locationController.text = "";
       }
     });
-    
+
     super.initState();
   }
 
@@ -78,16 +74,17 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     children: [
                       Container(
                         child: GoogleMap(
-                          mapType: MapType.normal,
-                          myLocationEnabled: true,
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(appBloc.currentLocation.latitude,
-                                  appBloc.currentLocation.longitude),
-                              zoom: 10),
-                          onMapCreated: _onMapCreated
-                        ),
+                            mapType: MapType.normal,
+                            myLocationEnabled: true,
+                            initialCameraPosition: CameraPosition(
+                                target: LatLng(appBloc.currentLocation.latitude,
+                                    appBloc.currentLocation.longitude),
+                                zoom: 10),
+                            onMapCreated: _onMapCreated),
                       ),
-                      if (appBloc.searchResults != null && appBloc.searchResults.length != 0) // && _locationController.text.length != 0) 
+                      if (appBloc.searchResults != null &&
+                          appBloc.searchResults.length !=
+                              0) // && _locationController.text.length != 0)
                         Container(
                           height: double.infinity,
                           width: double.infinity,
@@ -97,14 +94,14 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                                   .withOpacity(.6),
                               backgroundBlendMode: BlendMode.darken),
                         ),
-                      if (appBloc.searchResults != null && _locationController.text.length != 0)
+                      if (appBloc.searchResults != null &&
+                          _locationController.text.length != 0)
                         Container(
                           height: 300,
                           width: double.infinity,
                           child: ListView.builder(
                             itemCount: appBloc.searchResults.length,
                             itemBuilder: (context, index) {
-                              
                               return ListTile(
                                 title: Text(
                                   appBloc.searchResults[index].description,
@@ -112,8 +109,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                                 ),
                                 onTap: () {
                                   appBloc.setSelectedLocation(
-                                    appBloc.searchResults[index].placeId
-                                  );
+                                      appBloc.searchResults[index].placeId);
                                   //FocusScope.of(context).unfocus();
                                 },
                               );

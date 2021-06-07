@@ -2,14 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mobile_trip_planner/models/ticket_model.dart';
+import 'package:mobile_trip_planner/models/reservation_model.dart';
 import 'package:mobile_trip_planner/screens/full_ticket_screen.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class TicketView extends StatefulWidget {
-  Ticket ticket;
+  Reservation ticket;
 
   TicketView({Key? key, required this.ticket}) : super(key: key);
 

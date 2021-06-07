@@ -21,12 +21,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         _title,
         style: TextStyle(color: Colors.white),
       ),
-      actions: [
-        IconButton(
-          onPressed: () => _function(),
-          icon: _icon
-        )
-      ],
+      actions: [IconButton(onPressed: () => _function(), icon: _icon)],
     );
   }
 }

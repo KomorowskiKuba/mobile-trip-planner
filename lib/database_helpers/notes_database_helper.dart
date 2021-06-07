@@ -24,23 +24,21 @@ class NotesDatabaseHelper {
 
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
-  
+
   Future _createDB(Database database, int version) async {
     final travelIdType = 'INTEGER NOT NULL';
     final noteIdType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final titleType = 'TEXT NOT NULL';
     final contentType = 'TEXT NOT NULL';
 
-    await database.execute(
-      '''
+    await database.execute('''
         CREATE TABLE $tableName (
           ${NoteFields.travelId} $travelIdType,
           ${NoteFields.noteId} $noteIdType,
           ${NoteFields.title} $titleType,
           ${NoteFields.content} $contentType
         )
-      '''
-    );
+      ''');
   }
 
   Future<Note> create(Note note) async {
@@ -53,12 +51,10 @@ class NotesDatabaseHelper {
   Future<Note> readNote(int noteId) async {
     final database = await instance.database;
 
-    final maps = await database.query(
-      tableName,
-      columns: NoteFields.values,
-      where: '${NoteFields.noteId} = ?',
-      whereArgs: [noteId]
-    );
+    final maps = await database.query(tableName,
+        columns: NoteFields.values,
+        where: '${NoteFields.noteId} = ?',
+        whereArgs: [noteId]);
 
     if (maps.isNotEmpty) {
       return Note.fromJson(maps.first);
@@ -78,22 +74,15 @@ class NotesDatabaseHelper {
   Future<int> update(Note note) async {
     final database = await instance.database;
 
-    return database.update(
-      tableName,
-      note.toJson(),
-      where: '${NoteFields.noteId} = ?',
-      whereArgs: [note.noteId]
-    );
+    return database.update(tableName, note.toJson(),
+        where: '${NoteFields.noteId} = ?', whereArgs: [note.noteId]);
   }
 
   Future<int> delete(int? noteId) async {
     final database = await instance.database;
 
-    return await database.delete(
-      tableName,
-      where: '${NoteFields.noteId} = ?',
-      whereArgs: [noteId]
-    );
+    return await database.delete(tableName,
+        where: '${NoteFields.noteId} = ?', whereArgs: [noteId]);
   }
 
   Future close() async {

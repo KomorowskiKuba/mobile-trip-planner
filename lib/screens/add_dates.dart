@@ -17,32 +17,31 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
   List<DateTime> _dates = [DateTime.now(), DateTime.now()];
   late List<SingleDay> _days;
   late DateTimeRange dateRange = DateTimeRange(
-    start: DateTime.now(),
-    end: DateTime.now().add(Duration(days: 7))
-  );
+      start: DateTime.now(), end: DateTime.now().add(Duration(days: 7)));
 
   static List<SingleDay> generateDays(int amount) {
     List<SingleDay> days = [];
 
     for (int i = 1; i <= amount; i++) {
-      days.add(SingleDay(name: ('Dzień ' + i.toString()), activities: [], date: DateTime.now(), ));
+      days.add(SingleDay(
+        name: ('Dzień ' + i.toString()),
+        activities: [],
+        date: DateTime.now(),
+      ));
     }
-    
+
     return days;
   }
 
   Future pickRange(BuildContext context) async {
     final initialDateRange = DateTimeRange(
-      start: DateTime.now(),
-      end: DateTime.now().add(Duration(days: 7))
-    );
+        start: DateTime.now(), end: DateTime.now().add(Duration(days: 7)));
 
     final newDateRange = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime(DateTime.now().year + 5),
-      initialDateRange: dateRange
-    );
+        context: context,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5),
+        initialDateRange: dateRange);
 
     if (newDateRange == null) return;
 
@@ -61,9 +60,9 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
               height: 5,
             ),
             InkWell(
-                child: DatePickAndDisplayTile(key: key, dates: [dateRange.start, dateRange.end]),
-                onTap: () => pickRange(context)
-            ),
+                child: DatePickAndDisplayTile(
+                    key: key, dates: [dateRange.start, dateRange.end]),
+                onTap: () => pickRange(context)),
             /*dateRange == null ? Container(
              width: 1,
              height: 1, 
@@ -92,8 +91,8 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
         ),
       ),
       onWillPop: () {
-          Navigator.pop(context);
-          throw Exception(); //TODO WTF
+        Navigator.pop(context);
+        throw Exception(); //TODO WTF
       },
     );
   }

@@ -45,10 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     border: OutlineInputBorder(),
                     hintText: _text,
                   ),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
               ),
             ),
@@ -56,22 +53,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               alignment: Alignment.bottomRight,
               padding: EdgeInsets.only(right: 5),
               child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).accentColor)
-                ),
-                onPressed: () {
-                  _text = _myController.text;
-                  _saveUserName(_text);
-                  Navigator.pop(context, _text);
-                },
-                child: Text(
-                  'Zapisz',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white
-                  ),
-                )
-              ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).accentColor)),
+                  onPressed: () {
+                    _text = _myController.text;
+                    _saveUserName(_text);
+                    Navigator.pop(context, _text);
+                  },
+                  child: Text(
+                    'Zapisz',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  )),
             )
           ],
         ),

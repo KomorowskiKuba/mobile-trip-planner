@@ -16,13 +16,13 @@ class FullTicketScreen extends StatelessWidget {
           Navigator.pop(context);
         },
         child: Center(
-          child: PhotoView(
-            imageProvider: FileImage(_imageFile),
-            backgroundDecoration: BoxDecoration(color: Theme.of(context).backgroundColor),
-            minScale: PhotoViewComputedScale.contained * 0.8,
-            maxScale: PhotoViewComputedScale.covered,
-          )
-        ),
+            child: PhotoView(
+          imageProvider: FileImage(_imageFile),
+          backgroundDecoration:
+              BoxDecoration(color: Theme.of(context).backgroundColor),
+          minScale: PhotoViewComputedScale.contained * 0.8,
+          maxScale: PhotoViewComputedScale.covered,
+        )),
       ),
     );
   }

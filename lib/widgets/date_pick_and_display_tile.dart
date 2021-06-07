@@ -40,10 +40,7 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
                   SizedBox(width: 10),
                   Text(
                     DateFormat('dd-MM-yyyy').format(widget.dates[0]),
-                    style: TextStyle(
-                        color:
-                            Colors.white,
-                        fontSize: 28),
+                    style: TextStyle(color: Colors.white, fontSize: 28),
                   ),
                   SizedBox(width: 10)
                 ],
