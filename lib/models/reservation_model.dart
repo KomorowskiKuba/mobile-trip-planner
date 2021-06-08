@@ -1,7 +1,12 @@
 final String tableName = 'reservations_database';
 
 class ReservationFields {
-  static final List<String> values = ['xd', 'xd'];
+  static final List<String> values = [
+    travelId,
+    reservationId,
+    title,
+    imagePath
+  ];
 
   static final String travelId = 'travelId';
   static final String reservationId = 'reservationId';

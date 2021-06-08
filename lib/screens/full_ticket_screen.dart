@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FullTicketScreen extends StatelessWidget {
-  final File _imageFile;
+  final String _imagePath;
 
-  FullTicketScreen(this._imageFile);
+  FullTicketScreen(this._imagePath);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class FullTicketScreen extends StatelessWidget {
         },
         child: Center(
             child: PhotoView(
-          imageProvider: FileImage(_imageFile),
+          imageProvider: AssetImage(_imagePath), //TODO: TO CHANGE
           backgroundDecoration:
               BoxDecoration(color: Theme.of(context).backgroundColor),
           minScale: PhotoViewComputedScale.contained * 0.8,

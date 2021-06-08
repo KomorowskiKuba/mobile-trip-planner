@@ -7,6 +7,7 @@ import 'package:mobile_trip_planner/screens/full_ticket_screen.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class TicketView extends StatefulWidget {
   Reservation ticket;
@@ -34,6 +35,16 @@ class _TicketViewState extends State<TicketView> {
     }
   }
 
+  Future<String> loadAsset(String path) async {
+    return await rootBundle.loadString(path);
+  }
+
+  @override
+  void initState() {
+    //loadAsset(widget.ticket.imagePath);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -55,7 +66,7 @@ class _TicketViewState extends State<TicketView> {
               child: InkWell(
                 child: Card(
                   color: Theme.of(context).primaryColor,
-                  child: _imageFile == null
+                  child: widget.ticket.imagePath == null
                       ? Container(
                           alignment: Alignment.center,
                           child: Text('Przytrzymaj żeby dodać zdjęcie',
@@ -64,17 +75,20 @@ class _TicketViewState extends State<TicketView> {
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold)))
                       : Container(
-                          child: Image.file(_imageFile),
+                          child: Image(
+                            image: AssetImage(
+                                widget.ticket.imagePath), //TODO: TO CHANGE
+                          ),
                         ),
                 ),
                 onLongPress: _getFromGallery,
                 onTap: () {
-                  if (_imageFile != null) {
+                  if (widget.ticket.imagePath != null) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                FullTicketScreen(_imageFile)));
+                                FullTicketScreen(widget.ticket.imagePath)));
                   }
                 },
               ),

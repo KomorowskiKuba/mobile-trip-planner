@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/database_helpers/reservations_database_helper.dart';
 import 'package:mobile_trip_planner/models/reservation_model.dart';
 import 'package:mobile_trip_planner/screens/ticket_view.dart';
 import 'package:mobile_trip_planner/widgets/bottomsheet_input_widget.dart';
@@ -12,26 +13,22 @@ class AddTicketsScreen extends StatefulWidget {
 }
 
 class _AddTicketsScreenState extends State<AddTicketsScreen> {
+  bool isLoading = false;
   String _text = "";
   final _myController = TextEditingController();
-  final List<Reservation> _tickets = [
-    Reservation(
-        travelId: 1,
-        title: 'Ticket 1',
-        imagePath: 'lib/assets/images/paris.jpg'),
-    Reservation(
-        travelId: 1,
-        title: 'Ticket 2',
-        imagePath: 'lib/assets/images/paris.jpg'),
-    Reservation(
-        travelId: 1,
-        title: 'Ticket 3',
-        imagePath: 'lib/assets/images/paris.jpg'),
-    Reservation(
-        travelId: 1,
-        title: 'Ticket 4',
-        imagePath: 'lib/assets/images/paris.jpg'),
-  ];
+  late List<Reservation> _tickets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadItems();
+  }
+
+  Future loadItems() async {
+    setState(() => isLoading = true);
+    _tickets = await ReservationsDatabaseHelper.instance.readAllReservations();
+    setState(() => isLoading = false);
+  }
 
   _saveItem(String ticketName) async {
     setState(() {
@@ -55,12 +52,18 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
                   controller: _myController,
                   onPressedFunction: () {
                     _text = _myController.text;
+                    ReservationsDatabaseHelper.instance.create(Reservation(
+                        title: _text,
+                        imagePath: 'lib/assets/images/paris.jpg', //TODO CHANGE
+                        travelId: 1));
                     _saveItem(_text);
                     _myController.clear();
+                    loadItems();
                     Navigator.pop(context, _text);
                   },
                   onWillPopFunction: () {
                     _myController.clear();
+                    loadItems();
                     Navigator.pop(context, _text);
                     throw Exception();
                   },
@@ -84,9 +87,11 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
                       background: DismissibleItemBackground(),
                       key: Key(ticket.title),
                       onDismissed: (direction) {
-                        setState(() {
-                          _tickets.removeAt(index);
-                        });
+                        //setState(() {
+                        //_tickets.removeAt(index);
+                        ReservationsDatabaseHelper.instance
+                            .delete(ticket.reservationId);
+                        //});
                       },
                       child: NextScreenTile(
                           ticket.title,

@@ -37,7 +37,7 @@ class ReservationsDatabaseHelper {
           ${ReservationFields.travelId} $travelIdType,
           ${ReservationFields.reservationId} $reservationIdType,
           ${ReservationFields.title} $titleType,
-          ${ReservationFields.imagePath} $imagePathType,
+          ${ReservationFields.imagePath} $imagePathType
         )
       ''');
   }
@@ -60,6 +60,7 @@ class ReservationsDatabaseHelper {
 
   Future<List<Reservation>> readAllReservations() async {
     final database = await instance.database;
+    print("TABLENAME: " + tableName);
     final result = await database.query(tableName);
 
     return result.map((json) => Reservation.fromJson(json)).toList();
