@@ -16,12 +16,14 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   Completer<GoogleMapController> _controller = Completer();
+  Marker _destination = Marker(markerId: MarkerId('center'));
   final _locationController = TextEditingController();
 
   StreamSubscription? locationSubscription;
 
   Future<void> _goToPlace(Place place) async {
     final GoogleMapController controller = await _controller.future;
+    _addMarker(place);
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(place.geometry.location.lat, place.geometry.location.lng),
       zoom: 10.0,
@@ -30,6 +32,16 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
+  }
+
+  void _addMarker(Place place) {
+    _destination = Marker(
+      markerId: MarkerId('center'),
+      draggable: false,
+      infoWindow: InfoWindow(title: place.name, snippet: place.vicinity),
+      position:
+          LatLng(place.geometry.location.lat, place.geometry.location.lng),
+    );
   }
 
   @override
@@ -66,58 +78,78 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         body: Stack(
           children: [
-            (appBloc.currentLocation == null)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Stack(
-                    children: [
-                      Container(
-                        child: GoogleMap(
-                            mapType: MapType.normal,
-                            myLocationEnabled: true,
-                            initialCameraPosition: CameraPosition(
-                                target: LatLng(appBloc.currentLocation.latitude,
-                                    appBloc.currentLocation.longitude),
-                                zoom: 10),
-                            onMapCreated: _onMapCreated),
-                      ),
-                      if (appBloc.searchResults != null &&
-                          appBloc.searchResults.length !=
-                              0) // && _locationController.text.length != 0)
-                        Container(
-                          height: double.infinity,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .backgroundColor
-                                  .withOpacity(.6),
-                              backgroundBlendMode: BlendMode.darken),
-                        ),
-                      if (appBloc.searchResults != null &&
-                          _locationController.text.length != 0)
-                        Container(
-                          height: 300,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            itemCount: appBloc.searchResults.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  appBloc.searchResults[index].description,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onTap: () {
-                                  appBloc.setSelectedLocation(
-                                      appBloc.searchResults[index].placeId);
-                                  //FocusScope.of(context).unfocus();
-                                },
-                              );
-                            },
-                          ),
-                        )
-                    ],
+            if (appBloc.currentLocation == null)
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            else
+              Stack(
+                children: [
+                  Container(
+                    child: GoogleMap(
+                        mapType: MapType.normal,
+                        myLocationEnabled: true,
+                        markers: {_destination},
+                        initialCameraPosition: CameraPosition(
+                            target: LatLng(appBloc.currentLocation!.latitude,
+                                appBloc.currentLocation!.longitude),
+                            zoom: 10),
+                        onMapCreated: _onMapCreated),
                   ),
+                  if (appBloc.searchResults != null &&
+                      appBloc.searchResults!.length !=
+                          0) // && _locationController.text.length != 0)
+                    Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).backgroundColor.withOpacity(.6),
+                          backgroundBlendMode: BlendMode.darken),
+                    ),
+                  if (appBloc.searchResults != null &&
+                      _locationController.text.length != 0)
+                    Container(
+                      height: 300,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        itemCount: appBloc.searchResults!.length,
+                        itemBuilder: (context, index) {
+                          if (appBloc.searchResults!.length > 0) {
+                            return ListTile(
+                              title: Text(
+                                appBloc.searchResults![index].description,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onTap: () {
+                                appBloc.setSelectedLocation(
+                                    appBloc.searchResults![index].placeId);
+                                print("NEW PLACE: ");
+                                print(appBloc.searchResults![index].placeId);
+                                print("PLACE DESC");
+                                print(
+                                    appBloc.searchResults![index].description);
+                                String placeName =
+                                    appBloc.searchResults![index].description;
+                                _locationController.value =
+                                    _locationController.value.copyWith(
+                                  text: placeName,
+                                  selection: TextSelection.collapsed(
+                                      offset: placeName.length),
+                                );
+                                //appBloc.searchResults[index].description;
+                                appBloc.searchResults!.clear();
+                                FocusScope.of(context).unfocus();
+                              },
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      ),
+                    )
+                ],
+              ),
             Positioned(
                 top: 10,
                 right: 10,

@@ -11,8 +11,8 @@ class AppBloc with ChangeNotifier {
   final geolocatorService = GeolocatorService();
   final placesService = PlacesService();
 
-  late Position currentLocation;
-  late List<PlaceSearch> searchResults;
+  Position? currentLocation;
+  List<PlaceSearch>? searchResults;
   late StreamController<Place> selectedLocation =
       StreamController<Place>.broadcast();
 
@@ -35,6 +35,10 @@ class AppBloc with ChangeNotifier {
     selectedLocation.add(await placesService.getPlace(placeId));
     //searchResults = null;
     notifyListeners();
+  }
+
+  Future<Place> getLocation(String placeId) {
+    return placesService.getPlace(placeId);
   }
 
   @override
