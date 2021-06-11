@@ -94,12 +94,18 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
                         //});
                       },
                       child: NextScreenTile(
-                          ticket.title,
-                          Icon(
+                          title: ticket.title,
+                          icon: Icon(
                             Icons.account_box_outlined,
                             color: Theme.of(context).accentColor,
                           ),
-                          TicketView(ticket: ticket)));
+                          function: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TicketView(ticket: ticket)));
+                          }));
                 },
               ),
             ),

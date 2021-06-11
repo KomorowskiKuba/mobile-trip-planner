@@ -27,40 +27,59 @@ class TravelManageScreen extends StatelessWidget {
           children: [
             TravelDestinationTile(travelDestination: _travel.destination),
             Center(
-              child: NextScreenTile(
-                  'Daty',
-                  Icon(
-                    Icons.calendar_today,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  AddDatesScreen()),
-            ),
+                child: NextScreenTile(
+                    title: 'Daty',
+                    icon: Icon(
+                      Icons.calendar_today,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    function: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddDatesScreen()));
+                    })),
             Center(
                 child: NextScreenTile(
-                    'Rezerwacje',
-                    Icon(
+                    title: 'Rezerwacje',
+                    icon: Icon(
                       Icons.check_box,
                       color: Theme.of(context).accentColor,
                     ), //zmienic ikonke
-                    AddTicketsScreen())),
+                    function: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddTicketsScreen()));
+                    })),
             Center(
-              child: NextScreenTile(
-                  'Notatki',
-                  Icon(
-                    Icons.notes,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  NotesScreen()),
-            ),
+                child: NextScreenTile(
+                    title: 'Notatki',
+                    icon: Icon(
+                      Icons.notes,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    function: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotesScreen()));
+                    })
+                //NotesScreen()),
+                ),
             Center(
-              child: NextScreenTile(
-                  'Lista rzeczy',
-                  Icon(
-                    Icons.check_box,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  AddBaggageListScreen()),
-            ),
+                child: NextScreenTile(
+                    title: 'Lista rzeczy',
+                    icon: Icon(
+                      Icons.check_box,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    function: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddBaggageListScreen()));
+                    })),
           ],
         ),
       ),

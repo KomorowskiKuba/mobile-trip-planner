@@ -12,6 +12,7 @@ import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class TripPlanScreen extends StatelessWidget {
   bool _isSaved = false;
+  var _dates;
 
   @override
   Widget build(BuildContext context) {
@@ -32,54 +33,83 @@ class TripPlanScreen extends StatelessWidget {
                 height: 5,
               ),
               Center(
-                child: NextScreenTile(
-                    'Dodaj miejsce',
-                    Icon(
-                      Icons.place,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    AddPlaceScreen()),
-              ),
-              Center(
-                child: NextScreenTile(
-                    'Dodaj daty',
-                    Icon(
-                      Icons.calendar_today,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    AddDatesScreen()),
-              ),
+                  child: NextScreenTile(
+                      title: 'Dodaj miejsce',
+                      icon: Icon(
+                        Icons.place,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      function: () {
+                        final placeId = Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddPlaceScreen()));
+                        print("MIEJSCE");
+                        print(placeId);
+                      })
+                  //AddPlaceScreen()),
+                  ),
               Center(
                   child: NextScreenTile(
-                      'Dodaj rezerwacje',
-                      Icon(
+                      title: 'Dodaj daty',
+                      icon: Icon(
+                        Icons.calendar_today,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      function: () async {
+                        final outcome = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddDatesScreen()));
+                        print("DATY!!!!");
+                        print(outcome.toString());
+                      })),
+              Center(
+                  child: NextScreenTile(
+                      title: 'Dodaj rezerwacje',
+                      icon: Icon(
                         Icons.check_box,
                         color: Theme.of(context).accentColor,
-                      ), //zmienic ikonke
-                      AddTicketsScreen())),
+                      ),
+                      function: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddTicketsScreen()));
+                      })), //zmienic ikonke
               Center(
-                child: NextScreenTile(
-                    'Dodaj notatki',
-                    Icon(
-                      Icons.notes,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    NotesScreen()),
-              ),
+                  child: NextScreenTile(
+                      title: 'Dodaj notatki',
+                      icon: Icon(
+                        Icons.notes,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      function: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotesScreen()));
+                      })),
               Center(
-                child: NextScreenTile(
-                    'Dodaj listę rzeczy',
-                    Icon(
-                      Icons.check_box,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    AddBaggageListScreen()),
-              ),
+                  child: NextScreenTile(
+                      title: 'Dodaj listę rzeczy',
+                      icon: Icon(
+                        Icons.check_box,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      function: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddBaggageListScreen()));
+                      })),
             ],
           ),
         ),
       ),
       onWillPop: () {
+        print("DATES: ");
+        print(_dates.toString());
         if (_isSaved) {
           Navigator.pop(context, false);
         } else {

@@ -90,9 +90,9 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
           ],
         ),
       ),
-      onWillPop: () {
-        Navigator.pop(context);
-        throw Exception(); //TODO WTF
+      onWillPop: () async {
+        Navigator.pop(context, dateRange);
+        return true;
       },
     );
   }

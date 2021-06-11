@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class NextScreenTile extends StatelessWidget {
-  final String _title;
-  final Icon _icon;
-  final Widget _nextScreen;
+  final String title;
+  final Icon icon;
+  final Function function;
 
-  NextScreenTile(this._title, this._icon, this._nextScreen);
+  NextScreenTile(
+      {required this.title, required this.icon, required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,11 @@ class NextScreenTile extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            _icon, //Wywalic
+            icon, //Wywalic
             SizedBox(
               width: 20,
             ),
-            Text(_title, style: TextStyle(fontSize: 25, color: Colors.white)),
+            Text(title, style: TextStyle(fontSize: 25, color: Colors.white)),
             //SizedBox(
             //  width: 70,
             //),
@@ -35,10 +36,7 @@ class NextScreenTile extends StatelessWidget {
                 size: 30,
                 color: Theme.of(context).accentColor,
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => _nextScreen));
-              },
+              onPressed: () => function(),
             )
           ],
         ),

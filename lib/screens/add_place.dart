@@ -18,6 +18,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   Completer<GoogleMapController> _controller = Completer();
   Marker _destination = Marker(markerId: MarkerId('center'));
   final _locationController = TextEditingController();
+  String _actualPlaceId = '';
 
   StreamSubscription? locationSubscription;
 
@@ -73,116 +74,126 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
   Widget build(BuildContext context) {
     final appBloc = Provider.of<AppBloc>(context);
 
-    return Scaffold(
-        appBar: MyAppBar.withoutIcons('Dodaj miejsce', () {}),
-        backgroundColor: Theme.of(context).primaryColor,
-        body: Stack(
-          children: [
-            if (appBloc.currentLocation == null)
-              Center(
-                child: CircularProgressIndicator(),
-              )
-            else
-              Stack(
-                children: [
-                  Container(
-                    child: GoogleMap(
-                        mapType: MapType.normal,
-                        myLocationEnabled: true,
-                        markers: {_destination},
-                        initialCameraPosition: CameraPosition(
-                            target: LatLng(appBloc.currentLocation!.latitude,
-                                appBloc.currentLocation!.longitude),
-                            zoom: 10),
-                        onMapCreated: _onMapCreated),
-                  ),
-                  if (appBloc.searchResults != null &&
-                      appBloc.searchResults!.length !=
-                          0) // && _locationController.text.length != 0)
+    return WillPopScope(
+      child: Scaffold(
+          appBar: MyAppBar.withoutIcons('Dodaj miejsce', () {}),
+          backgroundColor: Theme.of(context).primaryColor,
+          body: Stack(
+            children: [
+              if (appBloc.currentLocation == null)
+                Center(
+                  child: CircularProgressIndicator(),
+                )
+              else
+                Stack(
+                  children: [
                     Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).backgroundColor.withOpacity(.6),
-                          backgroundBlendMode: BlendMode.darken),
+                      child: GoogleMap(
+                          mapType: MapType.normal,
+                          myLocationEnabled: true,
+                          markers: {_destination},
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(appBloc.currentLocation!.latitude,
+                                  appBloc.currentLocation!.longitude),
+                              zoom: 10),
+                          onMapCreated: _onMapCreated),
                     ),
-                  if (appBloc.searchResults != null &&
-                      _locationController.text.length != 0)
-                    Container(
-                      height: 300,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: appBloc.searchResults!.length,
-                        itemBuilder: (context, index) {
-                          if (appBloc.searchResults!.length > 0) {
-                            return ListTile(
-                              title: Text(
-                                appBloc.searchResults![index].description,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onTap: () {
-                                appBloc.setSelectedLocation(
-                                    appBloc.searchResults![index].placeId);
-                                print("NEW PLACE: ");
-                                print(appBloc.searchResults![index].placeId);
-                                print("PLACE DESC");
-                                print(
-                                    appBloc.searchResults![index].description);
-                                String placeName =
-                                    appBloc.searchResults![index].description;
-                                _locationController.value =
-                                    _locationController.value.copyWith(
-                                  text: placeName,
-                                  selection: TextSelection.collapsed(
-                                      offset: placeName.length),
-                                );
-                                //appBloc.searchResults[index].description;
-                                appBloc.searchResults!.clear();
-                                FocusScope.of(context).unfocus();
-                              },
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
+                    if (appBloc.searchResults != null &&
+                        appBloc.searchResults!.length != 0 &&
+                        _locationController.text.length != 0)
+                      Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .backgroundColor
+                                .withOpacity(.6),
+                            backgroundBlendMode: BlendMode.darken),
                       ),
-                    )
-                ],
-              ),
-            Positioned(
-                top: 10,
-                right: 10,
-                left: 10,
-                child: Container(
-                    child: Card(
-                        color: Theme.of(context).primaryColor,
-                        child: Row(
-                          children: [
-                            IconButton(
-                                color: Theme.of(context).accentColor,
-                                icon: Icon(Icons.search),
-                                onPressed: () {}),
-                            Expanded(
-                                child: TextField(
-                              controller: _locationController,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
-                              cursorColor: Theme.of(context).accentColor,
-                              keyboardType: TextInputType.text,
-                              textInputAction: TextInputAction.go,
-                              textCapitalization: TextCapitalization.words,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(horizontal: 10),
-                                  hintText: 'Szukaj miejsca...'),
-                              onSubmitted: (val) {},
-                              onChanged: (val) => appBloc.searchPlaces(val),
-                            ))
-                          ],
-                        )))),
-          ],
-        ));
+                    if (appBloc.searchResults != null &&
+                        _locationController.text.length != 0)
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        child: ListView.builder(
+                          itemCount: appBloc.searchResults!.length,
+                          itemBuilder: (context, index) {
+                            if (appBloc.searchResults!.length > 0) {
+                              return ListTile(
+                                title: Text(
+                                  appBloc.searchResults![index].description,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onTap: () {
+                                  appBloc.setSelectedLocation(
+                                      appBloc.searchResults![index].placeId);
+                                  print("NEW PLACE: ");
+                                  print(appBloc.searchResults![index].placeId);
+                                  print("PLACE DESC");
+                                  print(appBloc
+                                      .searchResults![index].description);
+                                  _actualPlaceId =
+                                      appBloc.searchResults![index].placeId;
+                                  print(_actualPlaceId);
+                                  String placeName =
+                                      appBloc.searchResults![index].description;
+                                  _locationController.value =
+                                      _locationController.value.copyWith(
+                                    text: placeName,
+                                    selection: TextSelection.collapsed(
+                                        offset: placeName.length),
+                                  );
+                                  //appBloc.searchResults[index].description;
+                                  appBloc.searchResults!.clear();
+                                  FocusScope.of(context).unfocus();
+                                },
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
+                      )
+                  ],
+                ),
+              Positioned(
+                  top: 10,
+                  right: 10,
+                  left: 10,
+                  child: Container(
+                      child: Card(
+                          color: Theme.of(context).primaryColor,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  color: Theme.of(context).accentColor,
+                                  icon: Icon(Icons.search),
+                                  onPressed: () {}),
+                              Expanded(
+                                  child: TextField(
+                                controller: _locationController,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25),
+                                cursorColor: Theme.of(context).accentColor,
+                                keyboardType: TextInputType.text,
+                                textInputAction: TextInputAction.go,
+                                textCapitalization: TextCapitalization.words,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    hintText: 'Szukaj miejsca...'),
+                                onSubmitted: (val) {},
+                                onChanged: (val) => appBloc.searchPlaces(val),
+                              ))
+                            ],
+                          )))),
+            ],
+          )),
+      onWillPop: () async {
+        Navigator.pop(context, _actualPlaceId);
+        return true;
+      },
+    );
   }
 }

@@ -132,15 +132,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Center(
-              child: NextScreenTile(
-                  'Zaplanuj podróż',
-                  Icon(
-                    Icons.airplanemode_on_sharp,
-                    size: 40,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  TripPlanScreen()),
-            ),
+                child: NextScreenTile(
+                    title: 'Zaplanuj podróż',
+                    icon: Icon(
+                      Icons.airplanemode_on_sharp,
+                      size: 40,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    function: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TripPlanScreen()));
+                    })),
             Center(child: ScrollableRowTile(_travels)),
           ],
         ),
