@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 
 import 'package:mobile_trip_planner/screens/add_baggage_list.dart';
 import 'package:mobile_trip_planner/screens/add_dates.dart';
@@ -8,10 +10,19 @@ import 'package:mobile_trip_planner/screens/add_tickets.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
+import 'package:mobile_trip_planner/widgets/travel_name_widget.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
-class TripPlanScreen extends StatelessWidget {
+class TripPlanScreen extends StatefulWidget {
+  @override
+  _TripPlanScreenState createState() => _TripPlanScreenState();
+}
+
+class _TripPlanScreenState extends State<TripPlanScreen> {
+  Tripinfo _travel = Tripinfo(name: "Nowa podróż", destinationId: "", startDate: DateTime.now(), endDate: DateTime.now());
+
   bool _isSaved = false;
+
   var _dates;
 
   @override
@@ -19,6 +30,10 @@ class TripPlanScreen extends StatelessWidget {
     return WillPopScope(
       child: Scaffold(
         appBar: MyAppBar('Planowanie podróży', Icon(Icons.save), () {
+          if (!_isSaved) {
+            _isSaved = true;
+            TripDatabaseHelper.instance.create(_travel);
+          }
           //save
           SavedSnackBar.buildSavedSnackBar(context);
           print('Zapisano!');
@@ -32,6 +47,8 @@ class TripPlanScreen extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
+              Center(child: TravelNameWidget(tripinfo: _travel,)
+              ,),
               Center(
                   child: NextScreenTile(
                       title: 'Dodaj miejsce',
@@ -39,13 +56,12 @@ class TripPlanScreen extends StatelessWidget {
                         Icons.place,
                         color: Theme.of(context).accentColor,
                       ),
-                      function: () {
-                        final placeId = Navigator.push(
+                      function: () async {
+                        final placeId = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddPlaceScreen()));
-                        print("MIEJSCE");
-                        print(placeId);
+                                builder: (context) => AddPlaceScreen())) as String;
+                        _travel.destinationId = placeId;
                       })
                   //AddPlaceScreen()),
                   ),
@@ -60,9 +76,9 @@ class TripPlanScreen extends StatelessWidget {
                         final outcome = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddDatesScreen()));
-                        print("DATY!!!!");
-                        print(outcome.toString());
+                                builder: (context) => AddDatesScreen(_travel.startDate, _travel.endDate))) as DateTimeRange;
+                        _travel.startDate = outcome.start;
+                        _travel.endDate = outcome.end;
                       })),
               Center(
                   child: NextScreenTile(
@@ -75,7 +91,7 @@ class TripPlanScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddTicketsScreen()));
+                                builder: (buildContext) => AddTicketsScreen()));
                       })), //zmienic ikonke
               Center(
                   child: NextScreenTile(

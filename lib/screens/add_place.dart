@@ -9,6 +9,8 @@ import 'package:mobile_trip_planner/models/place_model.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:provider/provider.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class AddPlaceScreen extends StatefulWidget {
   @override
   _AddPlaceScreenState createState() => _AddPlaceScreenState();
@@ -62,11 +64,11 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   @override
   void dispose() {
-    final appBloc = Provider.of<AppBloc>(context, listen: false);
+    //final appBloc = Provider.of<AppBloc>(context, listen: false);
 
-    appBloc.dispose();
-    _locationController.dispose();
-    locationSubscription!.cancel();
+    //appBloc.dispose();
+    //_locationController.dispose();
+    //locationSubscription!.cancel();
     super.dispose();
   }
 
@@ -76,6 +78,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
     return WillPopScope(
       child: Scaffold(
+        key: _scaffoldKey,
           appBar: MyAppBar.withoutIcons('Dodaj miejsce', () {}),
           backgroundColor: Theme.of(context).primaryColor,
           body: Stack(

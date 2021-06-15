@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:mobile_trip_planner/models/tripinfo_model.dart';

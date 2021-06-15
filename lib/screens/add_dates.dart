@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/models/day_model.dart';
-import 'package:mobile_trip_planner/screens/day_screen.dart';
-import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
 
 import 'package:mobile_trip_planner/widgets/date_pick_and_display_tile.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
-import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 
 class AddDatesScreen extends StatefulWidget {
+  DateTime startDate;
+  DateTime endDate;
+
+  AddDatesScreen(this.startDate, this.endDate);
+
   @override
   _AddDatesScreenState createState() => _AddDatesScreenState();
 }
 
 class _AddDatesScreenState extends State<AddDatesScreen> {
   final key = new GlobalKey<DatePickAndDisplayTileState>();
-  List<DateTime> _dates = [DateTime.now(), DateTime.now()];
-  late List<SingleDay> _days;
-  late DateTimeRange dateRange = DateTimeRange(
-      start: DateTime.now(), end: DateTime.now().add(Duration(days: 7)));
+  late DateTimeRange dateRange = DateTimeRange(start: widget.startDate, end: widget.endDate);
 
   static List<SingleDay> generateDays(int amount) {
     List<SingleDay> days = [];
@@ -34,9 +33,6 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
   }
 
   Future pickRange(BuildContext context) async {
-    final initialDateRange = DateTimeRange(
-        start: DateTime.now(), end: DateTime.now().add(Duration(days: 7)));
-
     final newDateRange = await showDateRangePicker(
         context: context,
         firstDate: DateTime(DateTime.now().year - 5),
@@ -63,30 +59,6 @@ class _AddDatesScreenState extends State<AddDatesScreen> {
                 child: DatePickAndDisplayTile(
                     key: key, dates: [dateRange.start, dateRange.end]),
                 onTap: () => pickRange(context)),
-            /*dateRange == null ? Container(
-             width: 1,
-             height: 1, 
-            ) 
-            : Expanded(
-              child: ListView.builder(
-                itemCount: _days.length,
-                itemBuilder: (context, index) {
-                  final day = _days[index];
-
-                  return Dismissible(
-                    direction: DismissDirection.startToEnd,
-                    background: DismissibleItemBackground(),
-                    key: Key(day.name),
-                    onDismissed: (direction) {
-                      setState(() {
-                        _days.removeAt(index);
-                      });
-                    },
-                    child: NextScreenTile(day.name, Icon(Icons.calendar_today, color: Colors.white), DayScreen(day: day)),
-                  );
-                },
-              ),
-            ),*/
           ],
         ),
       ),

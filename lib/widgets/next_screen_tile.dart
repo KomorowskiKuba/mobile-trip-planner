@@ -26,9 +26,6 @@ class NextScreenTile extends StatelessWidget {
               width: 20,
             ),
             Text(title, style: TextStyle(fontSize: 25, color: Colors.white)),
-            //SizedBox(
-            //  width: 70,
-            //),
             Spacer(),
             IconButton(
               icon: Icon(

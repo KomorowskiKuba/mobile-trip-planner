@@ -3,9 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
 
 import 'package:mobile_trip_planner/models/tip_model.dart';
-import 'package:mobile_trip_planner/models/travel_model.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/screens/settings.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
@@ -20,28 +21,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = false;
   Future _future = Future<Null>.value(null);
   String _name = 'Nieznajomy';
   List<Tip> _tips = [];
 
-  List<Travel> _travels = [
-    Travel('Rzym', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Paryż', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Huston', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Nowy Jork', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Warszawa', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Barcelona', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Czeremcha', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
-    Travel('Bydgoszcz', Image(image: AssetImage('lib/assets/images/paris.jpg')),
-        [DateTime.now(), DateTime.now()]),
+  List<Tripinfo> _travels = [
+    //Tripinfo(name: "Rzym", destinationId: "xdddd", startDate: DateTime.now(), endDate: DateTime.now().add(Duration(days: 5)))
   ];
+
+  Future loadTravels() async {
+    setState(() => isLoading = true);
+    _travels = await TripDatabaseHelper.instance.readlAllInfo();
+    setState(() => isLoading = false);
+  }
 
   _loadName() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -65,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    loadTravels();
     _future = _readJson();
     _loadName();
     super.initState();
@@ -143,9 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TripPlanScreen()));
+                              builder: (context) => TripPlanScreen())).whenComplete(loadTravels);
                     })),
-            Center(child: ScrollableRowTile(_travels)),
+            isLoading
+                ? CircularProgressIndicator()
+                : Center(child: ScrollableRowTile(_travels)),
           ],
         ),
       ),

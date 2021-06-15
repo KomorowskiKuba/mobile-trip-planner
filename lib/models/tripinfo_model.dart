@@ -36,15 +36,15 @@ class Tripinfo {
       travelId: json[TripinfoFields.travelId] as int?,
       name: json[TripinfoFields.name] as String,
       destinationId: json[TripinfoFields.destinantionId] as String,
-      startDate: json[TripinfoFields.startDate] as DateTime,
-      endDate: json[TripinfoFields.endDate] as DateTime);
+      startDate: DateTime.parse(json[TripinfoFields.startDate] as String),
+      endDate: DateTime.parse(json[TripinfoFields.endDate] as String));
 
   Map<String, Object?> toJson() => {
         TripinfoFields.travelId: travelId,
         TripinfoFields.name: name,
         TripinfoFields.destinantionId: destinationId,
-        TripinfoFields.startDate: startDate,
-        TripinfoFields.endDate: endDate
+        TripinfoFields.startDate: startDate.toIso8601String(),
+        TripinfoFields.endDate: endDate.toIso8601String()
       };
 
   Tripinfo copy({

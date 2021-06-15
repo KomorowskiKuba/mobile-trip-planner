@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
 
-import 'package:mobile_trip_planner/models/travel_model.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/widgets/date_pick_and_display_tile.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 import 'package:mobile_trip_planner/widgets/travel_destination_widget.dart';
+import 'package:mobile_trip_planner/widgets/travel_name_widget.dart';
 
 import 'add_baggage_list.dart';
 import 'add_dates.dart';
@@ -13,19 +15,25 @@ import 'add_tickets.dart';
 
 class TravelManageScreen extends StatelessWidget {
   final key = new GlobalKey<DatePickAndDisplayTileState>();
-  final Travel _travel;
+  final Tripinfo _tripinfo;
 
-  TravelManageScreen(this._travel);
+  TravelManageScreen(this._tripinfo);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withoutIcons('Twoja podróż', () {}),
+      appBar: MyAppBar('Twoja podróż', Icon(Icons.delete), () {
+        TripDatabaseHelper.instance.delete(_tripinfo.travelId);
+        Navigator.pop(context);
+      }),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TravelDestinationTile(travelDestination: _travel.destination),
+            SizedBox(height: 5),
+            Center(child: TravelNameWidget(tripinfo: _tripinfo)
+              ,),
+            TravelDestinationTile(travel: _tripinfo),
             Center(
                 child: NextScreenTile(
                     title: 'Daty',
@@ -33,12 +41,15 @@ class TravelManageScreen extends StatelessWidget {
                       Icons.calendar_today,
                       color: Theme.of(context).accentColor,
                     ),
-                    function: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddDatesScreen()));
-                    })),
+                    function: () async {
+                      print(_tripinfo.destinationId);
+                        final outcome = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddDatesScreen(_tripinfo.startDate, _tripinfo.endDate))) as DateTimeRange;
+                        _tripinfo.startDate = outcome.start;
+                        _tripinfo.endDate = outcome.end;
+                      })),
             Center(
                 child: NextScreenTile(
                     title: 'Rezerwacje',
