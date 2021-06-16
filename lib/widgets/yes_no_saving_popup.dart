@@ -21,18 +21,8 @@ class _YesNoSavingPopupWidgetState extends State<YesNoSavingPopupWidget> {
       content: Text(widget.content),
       actions: [
         TextButton(
-          child: Text('Nie'),
-          onPressed: () {
-            Navigator.pop(context, false);
-            Navigator.pop(context, false);
-          },
-        ),
-        TextButton(
           child: Text('Tak'),
           onPressed: () {
-            //save
-            SavedSnackBar.buildSavedSnackBar(context);
-            print('SAVED');
             Navigator.pop(context, false);
             Navigator.pop(context, false);
           },

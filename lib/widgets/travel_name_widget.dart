@@ -42,7 +42,11 @@ class _TravelNameWidgetState extends State<TravelNameWidget> {
               height: MediaQuery.of(context).size.height * 0.5,
               color: Theme.of(context).primaryColor,
               child: TextField(
+                onSubmitted: (val) {
+                              FocusScope.of(context).unfocus();
+                            },
                 controller: controller,
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                 ),

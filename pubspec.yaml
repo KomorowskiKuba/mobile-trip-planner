@@ -56,3 +56,4 @@ flutter:
     - lib/assets/images/travel.png
     - lib/assets/icons/ticket.png
     - lib/assets/other/tips.json
+    - lib/assets/images/code.png

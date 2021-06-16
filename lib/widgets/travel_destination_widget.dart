@@ -55,8 +55,10 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
     Place place = await placesService.getPlace(widget.travel.destinationId);
     print(place.geometry.location.lat);
     print(place.geometry.location.lng);
-    _addMarker(place);
     _goToPlace(place);
+    setState(() {
+      
+    });
   }
 
   void _addMarker(Place place) {
@@ -101,16 +103,17 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
                     markers: {_destination},
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                              target: LatLng(appBloc.currentLocation!.latitude,
-                                  appBloc.currentLocation!.longitude),
+                              target: LatLng(52.2330653, 20.9211126),//appBloc.currentLocation!.latitude, appBloc.currentLocation!.longitude),
                               zoom: 10),
                     onMapCreated: _onMapCreated,
-                    onTap: (val) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddPlaceScreen()));
-                    },
+                    /*onTap: (val) async {
+                        final placeId = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddPlaceScreen())) as String;
+                        widget.travel.destinationId = placeId;
+                        
+                      },*/
                   ),
                 ),
               )

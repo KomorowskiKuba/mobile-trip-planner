@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/database_helpers/checklist_database_helper.dart';
 import 'package:mobile_trip_planner/models/checklist_item_model.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/widgets/bottomsheet_input_widget.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 
 class AddBaggageListScreen extends StatefulWidget {
+  Tripinfo tripinfo;
+
+  AddBaggageListScreen({Key? key, required this.tripinfo}) : super(key: key);
+
   @override
   _AddBaggageListScreenState createState() => _AddBaggageListScreenState();
 }
@@ -31,7 +36,7 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
 
   Future loadItems() async {
     setState(() => isLoading = true);
-    _items = await ChecklistDatabaseHelper.instance.readAllChecklistItems();
+    _items = await ChecklistDatabaseHelper.instance.readAllChecklistItems(widget.tripinfo.travelId as int);
     setState(() => isLoading = false);
   }
 
@@ -52,7 +57,7 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                       onPressedFunction: () {
                         _text = _myController.text;
                         ChecklistItem item = ChecklistItem(
-                            travelId: 1, itemName: _text, checked: 0);
+                            travelId: widget.tripinfo.travelId as int, itemName: _text, checked: 0);
                         ChecklistDatabaseHelper.instance.create(item);
                         _saveItem(item);
                         _myController.clear();

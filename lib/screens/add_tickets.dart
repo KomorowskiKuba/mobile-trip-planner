@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/database_helpers/reservations_database_helper.dart';
 import 'package:mobile_trip_planner/models/reservation_model.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/screens/ticket_view.dart';
 import 'package:mobile_trip_planner/widgets/bottomsheet_input_widget.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
@@ -8,6 +9,10 @@ import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
 
 class AddTicketsScreen extends StatefulWidget {
+  Tripinfo tripinfo;
+
+  AddTicketsScreen({Key? key, required this.tripinfo}) : super(key: key);
+
   @override
   _AddTicketsScreenState createState() => _AddTicketsScreenState();
 }
@@ -26,7 +31,7 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
 
   Future loadItems() async {
     setState(() => isLoading = true);
-    _tickets = await ReservationsDatabaseHelper.instance.readAllReservations();
+    _tickets = await ReservationsDatabaseHelper.instance.readAllReservations(widget.tripinfo.travelId as int);
     setState(() => isLoading = false);
   }
 
@@ -34,7 +39,7 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
     setState(() {
       _tickets.add(Reservation(
           title: ticketName,
-          imagePath: 'lib/assets/images/paris.jpg',
+          imagePath: 'lib/assets/images/paris.jpg', //TODO CHANGE
           travelId: 1));
     });
   }
@@ -47,26 +52,29 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
-                return BottomsheetInputWidget(
-                  hintText: 'Nazwa biletu',
-                  controller: _myController,
-                  onPressedFunction: () {
-                    _text = _myController.text;
-                    ReservationsDatabaseHelper.instance.create(Reservation(
-                        title: _text,
-                        imagePath: 'lib/assets/images/paris.jpg', //TODO CHANGE
-                        travelId: 1));
-                    _saveItem(_text);
-                    _myController.clear();
-                    loadItems();
-                    Navigator.pop(context, _text);
-                  },
-                  onWillPopFunction: () {
-                    _myController.clear();
-                    loadItems();
-                    Navigator.pop(context, _text);
-                    throw Exception();
-                  },
+                return Padding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  child: BottomsheetInputWidget(
+                    hintText: 'Nazwa biletu',
+                    controller: _myController,
+                    onPressedFunction: () {
+                      _text = _myController.text;
+                      ReservationsDatabaseHelper.instance.create(Reservation(
+                          title: _text,
+                          imagePath: 'lib/assets/images/code.png',
+                          travelId: widget.tripinfo.travelId as int));
+                      _saveItem(_text);
+                      _myController.clear();
+                      loadItems();
+                      Navigator.pop(context, _text);
+                    },
+                    onWillPopFunction: () {
+                      _myController.clear();
+                      loadItems();
+                      Navigator.pop(context, _text);
+                      throw Exception();
+                    },
+                  ),
                 );
               });
         }),

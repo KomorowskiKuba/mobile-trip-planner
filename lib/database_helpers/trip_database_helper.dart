@@ -73,7 +73,7 @@ class TripDatabaseHelper {
     return result.map((json) => Tripinfo.fromJson(json)).toList();
   }
 
-  Future<int> ipdate(Tripinfo tripinfo) async {
+  Future<int> update(Tripinfo tripinfo) async {
     final database = await instance.database;
 
     return database.update(tableName, tripinfo.toJson(),

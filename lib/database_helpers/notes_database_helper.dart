@@ -63,10 +63,12 @@ class NotesDatabaseHelper {
     }
   }
 
-  Future<List<Note>> readAllNotes() async {
+  Future<List<Note>> readAllNotes(int travelId) async {
     final database = await instance.database;
 
-    final result = await database.query(tableName);
+    final result = await database.query(tableName,
+    where: '${NoteFields.travelId} = ?',
+    whereArgs: [travelId]);
 
     return result.map((json) => Note.fromJson(json)).toList();
   }

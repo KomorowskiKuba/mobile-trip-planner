@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_trip_planner/database_helpers/notes_database_helper.dart';
 import 'package:mobile_trip_planner/models/note_model.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
 
 class NoteViewScreen extends StatefulWidget {
   Note? note;
+  Tripinfo tripinfo;
 
-  NoteViewScreen({key, this.note}) : super(key: key);
+  NoteViewScreen({key, this.note, required this.tripinfo}) : super(key: key);
 
   @override
   _NoteViewScreenState createState() => _NoteViewScreenState();
@@ -26,7 +28,7 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   @override
   void initState() {
     if (widget.note == null) {
-      note = Note(travelId: 1, title: '', content: '');
+      note = Note(travelId: widget.tripinfo.travelId as int, title: '', content: '');
 
       print(note.toString());
 
@@ -130,8 +132,8 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
               context: context,
               builder: (BuildContext context) {
                 return YesNoSavingPopupWidget(
-                    title: 'Zapisz notatkę',
-                    content: 'Czy przed wyjściem chcesz zapisać notatkę?');
+                    title: 'Nie zapisano notatki',
+                    content: 'Czy na pewno chcesz wyjść?');
               });
         }
         return Future.value(false);

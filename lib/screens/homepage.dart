@@ -10,10 +10,11 @@ import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/screens/settings.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
-import 'package:mobile_trip_planner/widgets/scrollable_row_tile.dart';
+import 'package:mobile_trip_planner/widgets/trip_preview_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/next_screen_tile.dart';
+import 'manage_travel.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -141,8 +142,56 @@ class _MyHomePageState extends State<MyHomePage> {
                     })),
             isLoading
                 ? CircularProgressIndicator()
-                : Center(child: ScrollableRowTile(_travels)),
-          ],
+                : Center(child: 
+                  Container(
+        width: double.infinity,
+        child: Card(
+          color: Theme.of(context).primaryColor,
+          child: Container(
+            padding: EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    //Icon(),
+                    Text('Poprzednie podróże',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ))
+                  ],
+                ),
+                /*Row(
+                  children: [
+                    Expanded(child: ListView.builder(
+                      itemCount: widget._travels.length,
+                          itemBuilder: (context, index) {
+                            final travel = widget._travels[index];
+                            return TripPreviewTile(travel);
+                          }
+                    )),
+                  ],
+                )*/
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (var currentTravel in _travels)
+                        TripPreviewTile(currentTravel, () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      TravelManageScreen(currentTravel))).then((val) => loadTravels());
+                        }),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+              ),
+                  ))],
         ),
       ),
     );

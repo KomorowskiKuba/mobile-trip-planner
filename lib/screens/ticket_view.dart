@@ -104,8 +104,8 @@ class _TicketViewState extends State<TicketView> {
               context: context,
               builder: (BuildContext context) {
                 return YesNoSavingPopupWidget(
-                    title: 'Zapisz bilet',
-                    content: 'Czy przed wyjściem chcesz zapisać bilet?');
+                    title: 'Zmiany nie zapisane',
+                    content: 'Czy na pewno chcesz wyjść?');
               });
         }
         return Future.value(false);

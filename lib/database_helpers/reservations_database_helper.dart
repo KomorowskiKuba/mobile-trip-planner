@@ -58,10 +58,13 @@ class ReservationsDatabaseHelper {
         whereArgs: [reservation.reservationId]);
   }
 
-  Future<List<Reservation>> readAllReservations() async {
+  Future<List<Reservation>> readAllReservations(int travelId) async {
     final database = await instance.database;
     print("TABLENAME: " + tableName);
-    final result = await database.query(tableName);
+    final result = await database.query(tableName,
+    where: '${ReservationFields.travelId} = ?',
+    whereArgs: [travelId]
+    );
 
     return result.map((json) => Reservation.fromJson(json)).toList();
   }

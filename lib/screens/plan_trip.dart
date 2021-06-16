@@ -80,7 +80,7 @@ class _TripPlanScreenState extends State<TripPlanScreen> {
                         _travel.startDate = outcome.start;
                         _travel.endDate = outcome.end;
                       })),
-              Center(
+              /*Center(
                   child: NextScreenTile(
                       title: 'Dodaj rezerwacje',
                       icon: Icon(
@@ -118,7 +118,7 @@ class _TripPlanScreenState extends State<TripPlanScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddBaggageListScreen()));
-                      })),
+                      })),*/
             ],
           ),
         ),
@@ -133,8 +133,8 @@ class _TripPlanScreenState extends State<TripPlanScreen> {
               context: context,
               builder: (BuildContext context) {
                 return YesNoSavingPopupWidget(
-                    title: 'Zapisz podróż',
-                    content: 'Czy przed wyjściem chcesz zapisać podróż?');
+                    title: 'Podróż nie zapisana',
+                    content: 'Czy na pewno chcesz wyjść?');
               });
         }
         return Future.value(false);
