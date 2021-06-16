@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 
 class TravelNameWidget extends StatefulWidget {
@@ -28,11 +29,13 @@ class _TravelNameWidgetState extends State<TravelNameWidget> {
         color: Theme.of(context).primaryColor,
         child: Row(
           children: [
-            //_icon,
             SizedBox(
               width: 20,
             ),
-            Icon(Icons.text_fields, color: Theme.of(context).accentColor,),
+            Icon(
+              Icons.textsms_outlined,
+              color: Theme.of(context).accentColor,
+            ),
             SizedBox(
               width: 20,
             ),
@@ -43,8 +46,8 @@ class _TravelNameWidgetState extends State<TravelNameWidget> {
               color: Theme.of(context).primaryColor,
               child: TextField(
                 onSubmitted: (val) {
-                              FocusScope.of(context).unfocus();
-                            },
+                  FocusScope.of(context).unfocus();
+                },
                 controller: controller,
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(

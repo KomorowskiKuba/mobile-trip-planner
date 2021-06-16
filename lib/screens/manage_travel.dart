@@ -33,8 +33,9 @@ class TravelManageScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 5),
-              Center(child: TravelNameWidget(tripinfo: _tripinfo)
-                ,),
+              Center(
+                child: TravelNameWidget(tripinfo: _tripinfo),
+              ),
               TravelDestinationTile(travel: _tripinfo),
               Center(
                   child: NextScreenTile(
@@ -44,26 +45,29 @@ class TravelManageScreen extends StatelessWidget {
                         color: Theme.of(context).accentColor,
                       ),
                       function: () async {
-                        print(_tripinfo.destinationId);
-                          final outcome = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddDatesScreen(_tripinfo.startDate, _tripinfo.endDate))) as DateTimeRange;
-                          _tripinfo.startDate = outcome.start;
-                          _tripinfo.endDate = outcome.end;
-                        })),
+                        final outcome = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddDatesScreen(
+                                    _tripinfo.startDate,
+                                    _tripinfo.endDate))) as DateTimeRange;
+                        _tripinfo.startDate = outcome.start;
+                        _tripinfo.endDate = outcome.end;
+                      })),
               Center(
                   child: NextScreenTile(
                       title: 'Rezerwacje',
                       icon: Icon(
-                        Icons.check_box,
+                        Icons.airplane_ticket,
                         color: Theme.of(context).accentColor,
-                      ), //zmienic ikonke
+                      ),
                       function: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddTicketsScreen(tripinfo: _tripinfo,)));
+                                builder: (context) => AddTicketsScreen(
+                                      tripinfo: _tripinfo,
+                                    )));
                       })),
               Center(
                   child: NextScreenTile(
@@ -76,10 +80,10 @@ class TravelManageScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NotesScreen(tripinfo: _tripinfo,)));
-                      })
-                  //NotesScreen()),
-                  ),
+                                builder: (context) => NotesScreen(
+                                      tripinfo: _tripinfo,
+                                    )));
+                      })),
               Center(
                   child: NextScreenTile(
                       title: 'Lista rzeczy',
@@ -91,7 +95,9 @@ class TravelManageScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddBaggageListScreen(tripinfo: _tripinfo,)));
+                                builder: (context) => AddBaggageListScreen(
+                                      tripinfo: _tripinfo,
+                                    )));
                       })),
             ],
           ),

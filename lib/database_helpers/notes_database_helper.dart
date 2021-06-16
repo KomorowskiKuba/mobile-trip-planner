@@ -67,8 +67,7 @@ class NotesDatabaseHelper {
     final database = await instance.database;
 
     final result = await database.query(tableName,
-    where: '${NoteFields.travelId} = ?',
-    whereArgs: [travelId]);
+        where: '${NoteFields.travelId} = ?', whereArgs: [travelId]);
 
     return result.map((json) => Note.fromJson(json)).toList();
   }

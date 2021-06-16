@@ -28,12 +28,10 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
   @override
   void initState() {
     if (widget.note == null) {
-      note = Note(travelId: widget.tripinfo.travelId as int, title: '', content: '');
-
-      print(note.toString());
+      note = Note(
+          travelId: widget.tripinfo.travelId as int, title: '', content: '');
 
       _isEdit = false;
-
       _titleController = TextEditingController(text: '');
       _contentController = TextEditingController(text: '');
     } else {
@@ -42,7 +40,6 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
       super.initState();
 
       _isEdit = true;
-
       _titleController = TextEditingController(text: widget.note!.title);
       _contentController = TextEditingController(text: widget.note!.content);
     }
@@ -55,17 +52,13 @@ class _NoteViewScreenState extends State<NoteViewScreen> {
           appBar: MyAppBar('Notatka', Icon(Icons.save), () {
             if (!_isSaved) {
               _isSaved = true;
-              print('HALKO' + _titleController.text);
               note.title = _titleController.text;
               note.content = _contentController.text;
-
               if (_isEdit) {
                 NotesDatabaseHelper.instance.update(note);
-                print("note" + note.toString());
               } else {
                 NotesDatabaseHelper.instance.create(note);
               }
-
               SavedSnackBar.buildSavedSnackBar(context);
             }
           }),

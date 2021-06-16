@@ -36,7 +36,8 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
 
   Future loadItems() async {
     setState(() => isLoading = true);
-    _items = await ChecklistDatabaseHelper.instance.readAllChecklistItems(widget.tripinfo.travelId as int);
+    _items = await ChecklistDatabaseHelper.instance
+        .readAllChecklistItems(widget.tripinfo.travelId as int);
     setState(() => isLoading = false);
   }
 
@@ -57,7 +58,9 @@ class _AddBaggageListScreenState extends State<AddBaggageListScreen> {
                       onPressedFunction: () {
                         _text = _myController.text;
                         ChecklistItem item = ChecklistItem(
-                            travelId: widget.tripinfo.travelId as int, itemName: _text, checked: 0);
+                            travelId: widget.tripinfo.travelId as int,
+                            itemName: _text,
+                            checked: 0);
                         ChecklistDatabaseHelper.instance.create(item);
                         _saveItem(item);
                         _myController.clear();

@@ -21,6 +21,13 @@ class _NotesScreenState extends State<NotesScreen> {
   List<Note> _notes = [];
   bool isLoading = false;
 
+  Future loadNotes() async {
+    setState(() => isLoading = true);
+    _notes = await NotesDatabaseHelper.instance
+        .readAllNotes(widget.tripinfo.travelId as int);
+    setState(() => isLoading = false);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,23 +36,18 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   void dispose() {
-    //NotesDatabaseHelper.instance.close();
-
     super.dispose();
-  }
-
-  Future loadNotes() async {
-    setState(() => isLoading = true);
-    _notes = await NotesDatabaseHelper.instance.readAllNotes(widget.tripinfo.travelId as int);
-    setState(() => isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar('Dodaj notatki', Icon(Icons.add), () {
-          Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NoteViewScreen(tripinfo: widget.tripinfo)))
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          NoteViewScreen(tripinfo: widget.tripinfo)))
               .whenComplete(loadNotes);
         }),
         backgroundColor: Theme.of(context).backgroundColor,
@@ -76,11 +78,12 @@ class _NotesScreenState extends State<NotesScreen> {
                             },
                             child: NotePreviewWidget(note, () {
                               Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              NoteViewScreen(note: note, tripinfo: widget.tripinfo,)))
-                                  .whenComplete(loadNotes);
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NoteViewScreen(
+                                            note: note,
+                                            tripinfo: widget.tripinfo,
+                                          ))).whenComplete(loadNotes);
                             }));
                       },
                     ),

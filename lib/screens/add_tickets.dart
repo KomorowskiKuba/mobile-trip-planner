@@ -7,6 +7,7 @@ import 'package:mobile_trip_planner/widgets/bottomsheet_input_widget.dart';
 import 'package:mobile_trip_planner/widgets/checklist_item_widget_dismissible.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/next_screen_tile.dart';
+import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 
 class AddTicketsScreen extends StatefulWidget {
   Tripinfo tripinfo;
@@ -35,15 +36,6 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
     setState(() => isLoading = false);
   }
 
-  _saveItem(String ticketName) async {
-    setState(() {
-      _tickets.add(Reservation(
-          title: ticketName,
-          imagePath: 'lib/assets/images/paris.jpg', //TODO CHANGE
-          travelId: 1));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +55,6 @@ class _AddTicketsScreenState extends State<AddTicketsScreen> {
                           title: _text,
                           imagePath: 'lib/assets/images/code.png',
                           travelId: widget.tripinfo.travelId as int));
-                      _saveItem(_text);
                       _myController.clear();
                       loadItems();
                       Navigator.pop(context, _text);

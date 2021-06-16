@@ -3,18 +3,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
 
+import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
 import 'package:mobile_trip_planner/models/tip_model.dart';
 import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 import 'package:mobile_trip_planner/screens/plan_trip.dart';
 import 'package:mobile_trip_planner/screens/settings.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/trip_preview_tile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/next_screen_tile.dart';
 import 'manage_travel.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -27,9 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _name = 'Nieznajomy';
   List<Tip> _tips = [];
 
-  List<Tripinfo> _travels = [
-    //Tripinfo(name: "Rzym", destinationId: "xdddd", startDate: DateTime.now(), endDate: DateTime.now().add(Duration(days: 5)))
-  ];
+  List<Tripinfo> _travels = [];
 
   Future loadTravels() async {
     setState(() => isLoading = true);
@@ -136,62 +135,55 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     function: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TripPlanScreen())).whenComplete(loadTravels);
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TripPlanScreen()))
+                          .whenComplete(loadTravels);
                     })),
             isLoading
                 ? CircularProgressIndicator()
-                : Center(child: 
-                  Container(
-        width: double.infinity,
-        child: Card(
-          color: Theme.of(context).primaryColor,
-          child: Container(
-            padding: EdgeInsets.all(5),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    //Icon(),
-                    Text('Poprzednie podróże',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                        ))
-                  ],
-                ),
-                /*Row(
-                  children: [
-                    Expanded(child: ListView.builder(
-                      itemCount: widget._travels.length,
-                          itemBuilder: (context, index) {
-                            final travel = widget._travels[index];
-                            return TripPreviewTile(travel);
-                          }
-                    )),
-                  ],
-                )*/
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var currentTravel in _travels)
-                        TripPreviewTile(currentTravel, () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      TravelManageScreen(currentTravel))).then((val) => loadTravels());
-                        }),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-              ),
-                  ))],
+                : Center(
+                    child: Container(
+                    width: double.infinity,
+                    child: Card(
+                      color: Theme.of(context).primaryColor,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                //Icon(),
+                                Text('Poprzednie podróże',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                    ))
+                              ],
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  for (var currentTravel in _travels)
+                                    TripPreviewTile(currentTravel, () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TravelManageScreen(
+                                                          currentTravel)))
+                                          .then((val) => loadTravels());
+                                    }),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ))
+          ],
         ),
       ),
     );

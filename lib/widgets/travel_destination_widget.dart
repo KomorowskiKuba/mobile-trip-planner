@@ -1,19 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile_trip_planner/blocs/app_bloc.dart';
 import 'package:mobile_trip_planner/models/place_model.dart';
 import 'package:mobile_trip_planner/models/tripinfo_model.dart';
-import 'package:mobile_trip_planner/screens/add_place.dart';
 import 'package:mobile_trip_planner/services/places_service.dart';
-import 'package:provider/provider.dart';
 
 class TravelDestinationTile extends StatefulWidget {
   final Tripinfo travel;
 
-  TravelDestinationTile({key, required this.travel})
-      : super(key: key);
+  TravelDestinationTile({key, required this.travel}) : super(key: key);
 
   @override
   _TravelDestinationTileState createState() => _TravelDestinationTileState();
@@ -23,9 +22,6 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
   Completer<GoogleMapController> _controller = Completer();
   PlacesService placesService = PlacesService();
   Marker _destination = Marker(markerId: MarkerId('center'));
-  final _locationController = TextEditingController();
-  String _actualPlaceId = '';
-
   StreamSubscription? locationSubscription;
 
   Future<void> _goToPlace(Place place) async {
@@ -44,11 +40,10 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
   @override
   void initState() {
     print(widget.travel.destinationId);
-    // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_){
-            asyncMethod();
-          });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      asyncMethod();
+    });
   }
 
   void asyncMethod() async {
@@ -56,9 +51,7 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
     print(place.geometry.location.lat);
     print(place.geometry.location.lng);
     _goToPlace(place);
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   void _addMarker(Place place) {
@@ -73,8 +66,6 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
 
   @override
   Widget build(BuildContext context) {
-    final appBloc = Provider.of<AppBloc>(context);
-    
     return Container(
       height: 250,
       width: double.infinity,
@@ -103,17 +94,8 @@ class _TravelDestinationTileState extends State<TravelDestinationTile> {
                     markers: {_destination},
                     mapType: MapType.normal,
                     initialCameraPosition: CameraPosition(
-                              target: LatLng(52.2330653, 20.9211126),//appBloc.currentLocation!.latitude, appBloc.currentLocation!.longitude),
-                              zoom: 10),
+                        target: LatLng(52.2330653, 20.9211126), zoom: 10),
                     onMapCreated: _onMapCreated,
-                    /*onTap: (val) async {
-                        final placeId = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddPlaceScreen())) as String;
-                        widget.travel.destinationId = placeId;
-                        
-                      },*/
                   ),
                 ),
               )

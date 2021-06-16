@@ -3,7 +3,6 @@ import 'package:mobile_trip_planner/models/note_model.dart';
 
 class NotePreviewWidget extends StatelessWidget {
   final Note _note;
-  //final Widget _nextScreen;
   final Function _function;
 
   NotePreviewWidget(this._note, this._function);
@@ -21,7 +20,6 @@ class NotePreviewWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                //_icon,
                 SizedBox(
                   width: 10,
                 ),
@@ -29,7 +27,7 @@ class NotePreviewWidget extends StatelessWidget {
                   Icons.circle,
                   size: 15,
                   color: Theme.of(context).accentColor,
-                ), //Wywalic
+                ),
                 SizedBox(
                   width: 10,
                 ),

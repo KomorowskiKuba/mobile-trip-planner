@@ -40,8 +40,8 @@ class _BottomsheetInputWidgetState extends State<BottomsheetInputWidget> {
                     color: Theme.of(context).primaryColor,
                     child: TextField(
                       onSubmitted: (val) {
-                              FocusScope.of(context).unfocus();
-                            },
+                        FocusScope.of(context).unfocus();
+                      },
                       textCapitalization: TextCapitalization.sentences,
                       controller: widget.controller,
                       decoration: InputDecoration(

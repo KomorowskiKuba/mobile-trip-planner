@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -17,7 +16,7 @@ class FullTicketScreen extends StatelessWidget {
         },
         child: Center(
             child: PhotoView(
-          imageProvider: AssetImage(_imagePath), //TODO: TO CHANGE
+          imageProvider: AssetImage(_imagePath),
           backgroundDecoration:
               BoxDecoration(color: Theme.of(context).backgroundColor),
           minScale: PhotoViewComputedScale.contained * 0.8,

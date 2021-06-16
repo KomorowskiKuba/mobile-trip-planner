@@ -59,8 +59,7 @@ class ChecklistDatabaseHelper {
   Future<List<ChecklistItem>> readAllChecklistItems(int travelId) async {
     final database = await instance.database;
     final result = await database.query(tableName,
-    where: '${ChecklistItemFields.travelId} = ?',
-    whereArgs: [travelId]);
+        where: '${ChecklistItemFields.travelId} = ?', whereArgs: [travelId]);
 
     return result.map((json) => ChecklistItem.fromJson(json)).toList();
   }

@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
 import 'package:mobile_trip_planner/models/reservation_model.dart';
 import 'package:mobile_trip_planner/screens/full_ticket_screen.dart';
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
 import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 import 'package:mobile_trip_planner/widgets/yes_no_saving_popup.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class TicketView extends StatefulWidget {
   Reservation ticket;
@@ -21,7 +23,6 @@ class TicketView extends StatefulWidget {
 class _TicketViewState extends State<TicketView> {
   bool _isSaved = true;
   final picker = ImagePicker();
-  late File _imageFile;
 
   _getFromGallery() async {
     PickedFile? pickedFile = await ImagePicker().getImage(
@@ -29,9 +30,7 @@ class _TicketViewState extends State<TicketView> {
     );
 
     if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
+      setState(() {});
     }
   }
 
@@ -41,7 +40,6 @@ class _TicketViewState extends State<TicketView> {
 
   @override
   void initState() {
-    //loadAsset(widget.ticket.imagePath);
     super.initState();
   }
 
@@ -52,7 +50,6 @@ class _TicketViewState extends State<TicketView> {
         appBar: MyAppBar(widget.ticket.title, Icon(Icons.save), () {
           if (!_isSaved) {
             _isSaved = true;
-            //save
             SavedSnackBar.buildSavedSnackBar(context);
           }
         }),
@@ -76,8 +73,7 @@ class _TicketViewState extends State<TicketView> {
                                   fontWeight: FontWeight.bold)))
                       : Container(
                           child: Image(
-                            image: AssetImage(
-                                widget.ticket.imagePath), //TODO: TO CHANGE
+                            image: AssetImage(widget.ticket.imagePath),
                           ),
                         ),
                 ),

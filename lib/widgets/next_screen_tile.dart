@@ -21,7 +21,7 @@ class NextScreenTile extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            icon, //Wywalic
+            icon,
             SizedBox(
               width: 20,
             ),

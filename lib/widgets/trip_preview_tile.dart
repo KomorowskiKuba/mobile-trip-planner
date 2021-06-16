@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_trip_planner/database_helpers/trip_database_helper.dart';
-import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 
-import 'package:mobile_trip_planner/screens/manage_travel.dart';
+import 'package:mobile_trip_planner/models/tripinfo_model.dart';
 
 class TripPreviewTile extends StatelessWidget {
   final Tripinfo _tripinfo;
@@ -12,12 +10,10 @@ class TripPreviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
     return WillPopScope(
       child: Container(
-        //height: height * 0.2,
         width: width * 0.5,
         child: GestureDetector(
           child: Card(
@@ -33,8 +29,6 @@ class TripPreviewTile extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.all(5),
-                  //width: width * 0.5,
-                  //height: height * 0.16,
                   child: Image(
                     image: AssetImage('lib/assets/images/travel.png'),
                     color: Theme.of(context).accentColor,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String _title;
   final double _height = kToolbarHeight;
+  String _title;
   Icon _icon = Icon(null);
   Function _function;
 

@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mobile_trip_planner/blocs/app_bloc.dart';
 import 'package:mobile_trip_planner/models/place_model.dart';
-
 import 'package:mobile_trip_planner/widgets/my_app_bar.dart';
-import 'package:provider/provider.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -64,11 +64,6 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
   @override
   void dispose() {
-    //final appBloc = Provider.of<AppBloc>(context, listen: false);
-
-    //appBloc.dispose();
-    //_locationController.dispose();
-    //locationSubscription!.cancel();
     super.dispose();
   }
 
@@ -78,7 +73,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
 
     return WillPopScope(
       child: Scaffold(
-        key: _scaffoldKey,
+          key: _scaffoldKey,
           appBar: MyAppBar.withoutIcons('Dodaj miejsce', () {}),
           backgroundColor: Theme.of(context).primaryColor,
           body: Stack(
@@ -130,14 +125,8 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                                 onTap: () {
                                   appBloc.setSelectedLocation(
                                       appBloc.searchResults![index].placeId);
-                                  print("NEW PLACE: ");
-                                  print(appBloc.searchResults![index].placeId);
-                                  print("PLACE DESC");
-                                  print(appBloc
-                                      .searchResults![index].description);
                                   _actualPlaceId =
                                       appBloc.searchResults![index].placeId;
-                                  print(_actualPlaceId);
                                   String placeName =
                                       appBloc.searchResults![index].description;
                                   _locationController.value =
@@ -146,7 +135,6 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                                     selection: TextSelection.collapsed(
                                         offset: placeName.length),
                                   );
-                                  //appBloc.searchResults[index].description;
                                   appBloc.searchResults!.clear();
                                   FocusScope.of(context).unfocus();
                                 },

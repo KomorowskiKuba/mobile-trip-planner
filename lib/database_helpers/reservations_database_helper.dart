@@ -62,9 +62,7 @@ class ReservationsDatabaseHelper {
     final database = await instance.database;
     print("TABLENAME: " + tableName);
     final result = await database.query(tableName,
-    where: '${ReservationFields.travelId} = ?',
-    whereArgs: [travelId]
-    );
+        where: '${ReservationFields.travelId} = ?', whereArgs: [travelId]);
 
     return result.map((json) => Reservation.fromJson(json)).toList();
   }

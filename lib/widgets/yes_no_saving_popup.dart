@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_trip_planner/widgets/saved_snack_bar.dart';
 
 class YesNoSavingPopupWidget extends StatefulWidget {
   final String title;

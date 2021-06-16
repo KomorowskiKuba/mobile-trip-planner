@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 class DatePickAndDisplayTile extends StatefulWidget {
   List<DateTime> dates;
+
   DatePickAndDisplayTile({Key? key, required this.dates}) : super(key: key);
 
   @override
@@ -22,7 +23,6 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 10),
                   Icon(
@@ -52,7 +52,6 @@ class DatePickAndDisplayTileState extends State<DatePickAndDisplayTile> {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 10),
                   Icon(

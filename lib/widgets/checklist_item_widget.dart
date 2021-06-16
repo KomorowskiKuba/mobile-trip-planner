@@ -55,8 +55,6 @@ class _CheckListItemWidgetState extends State<CheckListItemWidget> {
                   decoration: InputDecoration(
                       hintText: 'Przedmiot', border: InputBorder.none)),
             ),
-            //SizedBox(
-            //  width: 70,
           ],
         ),
       ),
